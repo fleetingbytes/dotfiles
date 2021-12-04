@@ -8,6 +8,10 @@
 # alias ls='ls --color=auto'
 # PS1='[\u@\h \W]\$ '
 
+# Set vim as default editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 # extra paths:
 export PATH="/data/scripts:/data/progs/hugo/bin:$PATH"
 source ~/.bash_completion.d/my_argument_completion
