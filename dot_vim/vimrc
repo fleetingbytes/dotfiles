@@ -1,0 +1,154 @@
+" Make vim portable, well, not portable in linux yet
+" let $HOME=$VIM
+
+" remove toolbar and right-hand scrollb bar from GUI
+" :set guioptions-=T
+" :set guioptions-=r
+
+" Set fonts
+" set gfn=AcPlus_IBM_VGA_9x16:h24:
+set fenc=utf-8
+set fileencodings=ucs-bom,utf8,prc
+set encoding=utf-8
+scriptencoding utf-8
+if has("multi_byte")
+    set encoding=utf-8
+    set fileencodings=ucs-bom
+    set guifont=AcPlus_IBM_VGA_9x16:h24:cANSI
+endif
+
+" Show white space charaters
+:set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
+:set list
+:set wrap
+:set textwidth=0 wrapmargin=0
+:set formatoptions-=t
+
+" Show line numbers
+:set number relativenumber
+
+" Set visual beep
+:set vb
+
+" Set tab
+:set tabstop=4
+
+" Open more than 16 tabs
+set tabpagemax=20
+
+" Set color scheme
+"set t_Co=256
+"set termguicolors
+syntax on
+colorscheme gruvbox
+set background=dark
+highlight Comment cterm=italic
+
+" rust.vim wants this:
+filetype plugin indent on
+
+" Create command \ev to edit $MYVIMRC, modified for linux
+:nnoremap <Leader>ev :vsplit ~/dotfiles/.vim/vimrc<CR>
+
+" Treat underscore '_' as word boundary:
+:set iskeyword-=_
+
+" Set window size
+if has("gui_running")
+		set lines=33 columns=127
+"else
+		"if exists("+lines")
+				"set lines=35
+		"endif
+		"if exists("+columns")
+				"set columns=127
+		"endif
+endif
+
+" This is to run diff a file comparison program
+" On Windows this causes some problems:
+" https://stackoverflow.com/questions/21862446/vimdiff-failing-with-cannot-read-or-write-temp-files/23664167#23664167
+" Use the internal diff if available.
+" Otherwise use the special 'diffexpr' for Windows.
+if &diffopt !~# 'internal'
+  set diffexpr=MyDiff()
+endif
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg1 = substitute(arg1, '!', '\!', 'g')
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg2 = substitute(arg2, '!', '\!', 'g')
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let arg3 = substitute(arg3, '!', '\!', 'g')
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      if empty(&shellxquote)
+        let l:shxq_sav = ''
+        set shellxquote&
+      endif
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  let cmd = substitute(cmd, '!', '\!', 'g')
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+  if exists('l:shxq_sav')
+    let &shellxquote=l:shxq_sav
+  endif
+endfunction
+
+" Toggle wrapping
+noremap <silent> <Leader>w :call ToggleWrap()<CR>
+function ToggleWrap()
+		if &wrap
+				echo "Wrap ON"
+				noremap  <buffer> <silent> <Up>   gk
+				noremap  <buffer> <silent> <Down> gj
+				noremap  <buffer> <silent> <Home> g<Home>
+				noremap  <buffer> <silent> <End>  g<End>
+				inoremap <buffer> <silent> <Up>   <C-o>gk
+				inoremap <buffer> <silent> <Down> <C-o>gj
+				inoremap <buffer> <silent> <Home> <C-o>g<Home>
+				inoremap <buffer> <silent> <End>  <C-o>g<End>
+		else
+				echo "Wrap OFF"
+				silent! nunmap <buffer> <Up>
+				silent! nunmap <buffer> <Down>
+				silent! nunmap <buffer> <Home>
+				silent! nunmap <buffer> <End>
+				silent! iunmap <buffer> <Up>
+				silent! iunmap <buffer> <Down>
+				silent! iunmap <buffer> <Home>
+				silent! iunmap <buffer> <End>
+		endif
+endfunction
+
+" Macro for inserting current date and time
+:nnoremap <F12> "=strftime('%Y-%m-%dT%H:%M:%S%z')<CR>P
+:inoremap <F12> <C-R>=strftime('%Y-%m-%dT%H:%M:%S%z')<CR>
+
+" Quickly navigate between tabs
+nnoremap H gT
+nnoremap L gt
+
+" Setup Vimplugs
+call plug#begin('~/.vim/plugs')
+Plug 'vim-python/python-syntax'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tmhedberg/SimpylFold'
+Plug 'gruvbox-community/gruvbox'
+Plug 'godlygeek/tabular'
+Plug 'vim-syntastic/syntastic'
+Plug 'rust-lang/rust.vim'
+Plug 'Chiel92/vim-autoformat'
+call plug#end()
+

@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/tejul/src/easypaleo/site-root'
+let g:netrw_dirhist_3='/home/tejul/exchange_data/ticker'
+let g:netrw_dirhist_2='/boot/EFI/grub'
+let g:netrw_dirhist_1='/sys/class/backlight'
