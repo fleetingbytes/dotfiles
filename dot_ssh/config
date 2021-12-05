@@ -1,0 +1,21 @@
+Host github.com
+	IdentitiesOnly yes
+	IdentityFile ~/.ssh/id_rsa_nagidalgithub
+
+Host cryptoworth.github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/id_nagidal_cryptoworth_github
+	IdentitiesOnly yes
+
+Host dotfiles.github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/github_dotfiles_lappi
+	IdentitiesOnly yes
+
+Host artix-installation.github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/artix-installation
+	IdentitiesOnly yes
