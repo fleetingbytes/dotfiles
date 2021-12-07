@@ -1,6 +1,6 @@
 Host github.com
 	IdentitiesOnly yes
-	IdentityFile ~/.ssh/id_rsa_nagidalgithub
+	IdentityFile ~/.ssh/nagidalgithub
 
 Host cryptoworth.github.com
 	HostName github.com
