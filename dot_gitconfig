@@ -1,0 +1,8 @@
+[user]
+	name = Nagidal
+	email = nagidal146@gmail.com
+[core]
+	editor = /usr/bin/vim
+	excludesFile = /home/tejul/.gitignore
+[init]
+	defaultBranch = master
