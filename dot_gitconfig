@@ -12,3 +12,5 @@
 	locksverify = true
 [lfs "https://chazre.github.com/Nagidal/chazre.git/info/lfs"]
 	locksverify = true
+[lfs "https://bootstrap.github.com/Nagidal/bootstrap.git/info/lfs"]
+	locksverify = true
