@@ -8,3 +8,5 @@
 	defaultBranch = master
 [pull]
 	ff = only
+[lfs "https://dotfiles.github.com/Nagidal/dotfiles.git/info/lfs"]
+	locksverify = true
