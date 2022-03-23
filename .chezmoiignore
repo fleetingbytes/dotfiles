@@ -1,7 +1,1 @@
 .vim/plugs/
-# Ignore private ssh keys for now
-.ssh/*
-!.ssh/*.pub
-!.ssh/config
-!.ssh/authorized_keys
-!.ssh/known_hosts
