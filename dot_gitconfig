@@ -10,3 +10,5 @@
 	ff = only
 [lfs "https://dotfiles.github.com/Nagidal/dotfiles.git/info/lfs"]
 	locksverify = true
+[lfs "https://chazre.github.com/Nagidal/chazre.git/info/lfs"]
+	locksverify = true
