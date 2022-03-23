@@ -48,7 +48,7 @@ highlight Comment cterm=italic
 filetype plugin indent on
 
 " Create command \ev to edit $MYVIMRC, modified for linux
-:nnoremap <Leader>ev :vsplit ~/.local/share/chezmoi/dot_vim/vimrc<CR>
+:nnoremap <Leader>ev :tabe ~/.local/share/chezmoi/dot_vim/vimrc<CR>
 
 " Treat underscore '_' as word boundary:
 :set iskeyword-=_
@@ -139,6 +139,13 @@ endfunction
 " Quickly navigate between tabs
 nnoremap H gT
 nnoremap L gt
+
+" Automatic installation of VimPlug, from: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " Setup Vimplugs
 call plug#begin('~/.vim/plugs')
