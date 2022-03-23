@@ -170,6 +170,10 @@ call s:Color('faded_purple',   ['#8f3f71', 96])      " 143-63-113
 call s:Color('faded_aqua',     ['#427b58', 65])      " 66-123-88
 call s:Color('faded_orange',   ['#af3a03', 130])     " 175-58-3
 
+call s:Color('none', ['NONE','NONE'])
+call s:Color('NONE', ['NONE','NONE'])
+call s:Color('None', ['NONE','NONE'])
+
 " }}}
 " Setup Emphasis: {{{
 
@@ -386,7 +390,6 @@ if exists('g:gruvbox_number_column')
 endif
 
 let s:sign_column = s:gb.bg1
-
 if exists('g:gruvbox_sign_column')
   let s:sign_column = get(s:gb, g:gruvbox_sign_column)
 endif
@@ -438,6 +441,13 @@ let s:italicize_strings = ''
 if exists('g:gruvbox_italicize_strings')
   if g:gruvbox_italicize_strings == 1
     let s:italicize_strings = s:italic
+  endif
+endif
+
+let s:italicize_operators = ''
+if exists('g:gruvbox_italicize_operators')
+  if g:gruvbox_italicize_operators == 1
+    let s:italicize_operators = s:italic
   endif
 endif
 
@@ -681,7 +691,7 @@ hi! link Label GruvboxRed
 " try, catch, throw
 hi! link Exception GruvboxRed
 " sizeof, "+", "*", etc.
-hi! link Operator GruvboxFg1
+call s:HL('Operator',  s:gb.orange, s:none, s:italicize_operators)
 " Any other keyword
 hi! link Keyword GruvboxRed
 
@@ -812,6 +822,11 @@ hi! link LspDiagnosticsUnderlineInformation GruvboxBlueUnderline
 hi! link LspDiagnosticsDefaultHint GruvboxAqua
 hi! link LspDiagnosticsSignHint GruvboxAquaSign
 hi! link LspDiagnosticsUnderlineHint GruvboxAquaUnderline
+
+" }}}
+
+" Treesitter: {{{
+hi! link TSKeywordOperator GruvboxRed
 
 " }}}
 
@@ -1447,6 +1462,7 @@ hi! link coffeeBracket GruvboxOrange
 
 hi! link rubyStringDelimiter GruvboxGreen
 hi! link rubyInterpolationDelimiter GruvboxAqua
+hi! link rubyDefinedOperator rubyKeyword
 
 " }}}
 " ObjectiveC: {{{
