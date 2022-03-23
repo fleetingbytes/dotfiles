@@ -3,6 +3,8 @@
 	email = nagidal146@gmail.com
 [core]
 	editor = /usr/bin/vim
-	excludesFile = /home/tejul/.gitignore
+	excludesFile = ~/.gitignore
 [init]
 	defaultBranch = master
+[pull]
+	ff = only
