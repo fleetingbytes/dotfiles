@@ -6,7 +6,7 @@
         "args": "[]"
     },
     "age": {
-        "identity": "/home/pi/.ssh/age_identitiy.key",
+        "identity": "/home/pi/.ssh/age_identity.key",
         "recipient": "age1gvwgc4w2tlgp7fd6qx96ygx0h2gsf7x5qc4xkczdk0sjl0zl7dsqgfnar3"
     },
     "env": "/home/pi/envs",

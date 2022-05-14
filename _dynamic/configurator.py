@@ -43,7 +43,7 @@ def dynamic_data() -> Mapping[str, str]:
     home = Path(os.getenv("HOME", default=""))
     username = os.getenv("USER", default="")
     age = dict()
-    age["identity"] = (home / ".ssh" / "age_identitiy.key").as_posix()
+    age["identity"] = (home / ".ssh" / "age_identity.key").as_posix()
     age["recipient"] = f"age1gvwgc4w2tlgp7fd6qx96ygx0h2gsf7x5qc4xkczdk0sjl0zl7dsqgfnar3"
     environments_path = home / "envs"
     src_path = home / "src"
