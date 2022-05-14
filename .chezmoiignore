@@ -1,1 +1,3 @@
-.vim/plugs/
+*_
+*.md
+LICENSE

@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+configuration={{ .dynconfig | quote }}
+cfg_dir="{{ .chezmoi.sourceDir }}/_dynamic"
+script="${cfg_dir}/configurator.py"
+input_file="${cfg_dir}/$configuration"
+output_file="${cfg_dir}/dyn_config.json"
+
+# The existence of python on the target system is ensured by bootstrap repository
+# and its `deploy_dotfiles.sh` script
+python "$script" "$input_file" "$output_file"
