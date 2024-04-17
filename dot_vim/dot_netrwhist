@@ -1,6 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =4
-let g:netrw_dirhist_4='/home/tejul/src/easypaleo/site-root'
-let g:netrw_dirhist_3='/home/tejul/exchange_data/ticker'
-let g:netrw_dirhist_2='/boot/EFI/grub'
-let g:netrw_dirhist_1='/sys/class/backlight'
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/usr/share/X11/xkb/rules'
+let g:netrw_dirhist_9='/usr/share/X11/xkb'
+let g:netrw_dirhist_8='/usr/share/X11/xkb/geometry'
+let g:netrw_dirhist_7='/usr/share/X11/xkb'
+let g:netrw_dirhist_6='/usr/share/X11/xkb/geometry'
+let g:netrw_dirhist_5='/usr/share/X11/xkb'
+let g:netrw_dirhist_4='/usr/share/X11/xkb/compat'
+let g:netrw_dirhist_3='/usr/share/X11/xkb'
+let g:netrw_dirhist_2='/usr/share/X11/xkb/keycodes'
+let g:netrw_dirhist_1='/usr/share/X11/xkb'
