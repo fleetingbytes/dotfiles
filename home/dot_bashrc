@@ -22,7 +22,7 @@ add_to_path() {
 }
 
 # extra paths:
-add_to_path "/data/progs/hugo/bin" "/data/scripts" "${HOME}/.local/bin" 
+add_to_path "/usr/local/go/bin" "${HOME}/.local/bin" 
 
 
 # aliases
