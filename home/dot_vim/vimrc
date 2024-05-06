@@ -48,7 +48,7 @@ highlight Comment cterm=italic
 filetype plugin indent on
 
 " Create command \ev to edit $MYVIMRC, modified for linux
-:nnoremap <Leader>ev :tabe ~/.local/share/chezmoi/dot_vim/vimrc<CR>
+:nnoremap <Leader>ev :tabe ~/.local/share/chezmoi/home/dot_vim/vimrc<CR>
 
 " Treat underscore '_' as word boundary:
 :set iskeyword-=_
