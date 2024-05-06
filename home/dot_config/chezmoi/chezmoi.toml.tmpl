@@ -3,13 +3,16 @@
 {{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
 encryption = "age"
 
-[edit]
-	command = {{ $dyn.edit.command | quote }}
-	args = {{ $dyn.edit.args }}
+[add]
+	secrets = error
 
 [age]
 	identity = {{ $dyn.age.identity | quote }}
 	recipient = {{ $dyn.age.recipient | quote }}
+
+[edit]
+	command = {{ $dyn.edit.command | quote }}
+	args = {{ $dyn.edit.args }}
 
 [data]
 	# Only static data defined in `chezmoi.toml.tmpl`
