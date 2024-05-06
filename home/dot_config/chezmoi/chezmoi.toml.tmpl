@@ -19,10 +19,10 @@ encryption = "age"
 	# and are rendered for your convenience in dynamic_data.txt
 	# 
 	# You can switch to another dynamic configuration by changing the value
-	# in your .chezmoidata in you home directory and running `chezmoi apply`.
-	# When before applying, chezmoi will generate a new dyn_config.json and
+	# in your .chezmoidata in your home directory and running `chezmoi apply`.
+	# Before applying, chezmoi will generate a new dyn_config.json and
 	# recalculate any .tmpl files.
 	# 
-	# The .tmpl files are reading the dynamic data directly from dyn_config.json
-	# by having `$dyn := include "_dynamic/dyn_config.json | mustFromJson -` in the 
-	# template double braces.
+	# To read access of the dynamically configured values in a .tmpl file,
+	# use `$dyn := include "_dynamic/dyn_config.json | mustFromJson -`
+	# somewhere at the start of the file.
