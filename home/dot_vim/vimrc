@@ -1,154 +1,197 @@
-" Make vim portable, well, not portable in linux yet
-" let $HOME=$VIM
+" ## Vim Behavior ##
 
-" remove toolbar and right-hand scrollb bar from GUI
-" :set guioptions-=T
-" :set guioptions-=r
 
-" Set fonts
-" set gfn=AcPlus_IBM_VGA_9x16:h24:
-set fenc=utf-8
-set fileencodings=ucs-bom,utf8,prc
+" Treat underscore '_' as word boundary:
+set iskeyword-=_
+
+" Encoding
 set encoding=utf-8
 scriptencoding utf-8
+
+" Set file encodings
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf8,prc
 if has("multi_byte")
-    set encoding=utf-8
     set fileencodings=ucs-bom
-    set guifont=AcPlus_IBM_VGA_9x16:h24:cANSI
+    set encoding=utf-8
 endif
-
-" Show white space charaters
-:set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
-:set list
-:set wrap
-:set textwidth=0 wrapmargin=0
-:set formatoptions-=t
-
-" Show line numbers
-:set number relativenumber
-
-" Set visual beep
-:set vb
-
-" Set tab
-:set tabstop=4
 
 " Open more than 16 tabs
 set tabpagemax=20
 
-" Set color scheme
-"set t_Co=256
-"set termguicolors
+
+
+
+" ## Vim Visuals ##
+
+
+" Set syntax highlighting
 syntax on
-colorscheme gruvbox
-set background=dark
-highlight Comment cterm=italic
 
-" rust.vim wants this:
-filetype plugin indent on
+" Set color scheme
+"colorscheme gruvbox
+"set background=dark
+"highlight Comment cterm=italic
 
-" Create command \ev to edit $MYVIMRC, modified for linux
-:nnoremap <Leader>ev :tabe ~/.local/share/chezmoi/home/dot_vim/vimrc<CR>
+" Set visual beep
+set visualbell
 
-" Treat underscore '_' as word boundary:
-:set iskeyword-=_
+" Show white space charaters
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
+set list
+set wrap
+set textwidth=0 wrapmargin=0
+set formatoptions-=t
 
-" Set window size
-if has("gui_running")
-		set lines=33 columns=127
-"else
-		"if exists("+lines")
-				"set lines=35
-		"endif
-		"if exists("+columns")
-				"set columns=127
-		"endif
-endif
+" Show relative line numbers
+set number relativenumber
 
-" This is to run diff a file comparison program
-" On Windows this causes some problems:
-" https://stackoverflow.com/questions/21862446/vimdiff-failing-with-cannot-read-or-write-temp-files/23664167#23664167
-" Use the internal diff if available.
-" Otherwise use the special 'diffexpr' for Windows.
-if &diffopt !~# 'internal'
-  set diffexpr=MyDiff()
-endif
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg1 = substitute(arg1, '!', '\!', 'g')
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg2 = substitute(arg2, '!', '\!', 'g')
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let arg3 = substitute(arg3, '!', '\!', 'g')
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      if empty(&shellxquote)
-        let l:shxq_sav = ''
-        set shellxquote&
-      endif
-      let cmd = '"' . $VIMRUNTIME . '\diff"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  let cmd = substitute(cmd, '!', '\!', 'g')
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-  if exists('l:shxq_sav')
-    let &shellxquote=l:shxq_sav
-  endif
-endfunction
+" Show the number of occurrences of the search pattern
+" https://vi.stackexchange.com/questions/93/is-there-a-way-to-count-the-number-of-occurrences-of-a-word-in-a-file
+set shortmess-=S
 
-" Toggle wrapping
-noremap <silent> <Leader>w :call ToggleWrap()<CR>
-function ToggleWrap()
-		if &wrap
-				echo "Wrap ON"
-				noremap  <buffer> <silent> <Up>   gk
-				noremap  <buffer> <silent> <Down> gj
-				noremap  <buffer> <silent> <Home> g<Home>
-				noremap  <buffer> <silent> <End>  g<End>
-				inoremap <buffer> <silent> <Up>   <C-o>gk
-				inoremap <buffer> <silent> <Down> <C-o>gj
-				inoremap <buffer> <silent> <Home> <C-o>g<Home>
-				inoremap <buffer> <silent> <End>  <C-o>g<End>
-		else
-				echo "Wrap OFF"
-				silent! nunmap <buffer> <Up>
-				silent! nunmap <buffer> <Down>
-				silent! nunmap <buffer> <Home>
-				silent! nunmap <buffer> <End>
-				silent! iunmap <buffer> <Up>
-				silent! iunmap <buffer> <Down>
-				silent! iunmap <buffer> <Home>
-				silent! iunmap <buffer> <End>
-		endif
-endfunction
+" Set tab
+set tabstop=4 " Width of the tab character
+set softtabstop=4 " Fine-tunes the amount of white space to be added
+set shiftwidth=4 " Determines the amount ow white space to add in normal mode
+set expandtab " When inserting a tab character, replace it with spaces
 
-" Macro for inserting current date and time
-:nnoremap <F12> "=strftime('%Y-%m-%dT%H:%M:%S%z')<CR>P
-:inoremap <F12> <C-R>=strftime('%Y-%m-%dT%H:%M:%S%z')<CR>
+
+
+
+" ## Useful commands and remaps ##
+
+
+" Remap the leader key to space
+"
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+
+" edit $MYVIMRC
+nnoremap <Leader>ev :tabedit $MYVIMRC<CR>
+
+" source $MYVIMRC
+nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " Quickly navigate between tabs
 nnoremap H gT
 nnoremap L gt
 
-" Setup Vimplugs
+" Pretty-print minified JSON files (depends on python), use it as :J
+command! J %!python -m json.tool
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" XML folding (also folds .config files, presuming they are in XML)
+" " https://stackoverflow.com/a/46217327
+augroup XML
+    autocmd!
+    autocmd FileType xml let g:xml_syntax_folding=1
+    autocmd FileType xml setlocal foldmethod=syntax
+    autocmd FileType xml :syntax on
+    autocmd FileType xml :%foldopen!
+    autocmd FileType config let g:xml_syntax_folding=1
+    autocmd FileType config setlocal foldmethod=syntax
+    autocmd FileType config :syntax on
+    autocmd FileType config :%foldopen!
+augroup END
+
+" Create function to create aliases for long commands, https://stackoverflow.com/a/3879737
+function! SetupCommandAlias(from, to)
+   exec 'cnoreabbrev <expr> '.a:from
+        \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
+        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+endfunction
+
+" Greatest remap ever : Primeagen Blazingly Fast Vim Part 1
+xnoremap <leader>p "_dP
+xnoremap <leader>P "_d"*P
+
+
+
+
+" ## ALE Settings ##
+
+
+let g:ale_linters = {
+    \ 'rust': ['analyzer'],
+    \ 'javascript': ['eslint'],
+    \ 'typescript': ['eslint', 'tsserver', 'typecheck'],
+    \ }
+
+let g:ale_fixers = {
+    \ 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
+    \ 'javascript': ['eslint'],
+    \ 'typescript': ['eslint'],
+    \ }
+
+" As-you-type autocomplete
+set completeopt=menu,menuone,preview,noselect,noinsert,longest
+set previewheight=27
+let g:ale_completion_enabled = 1
+let g:ale_fix_on_save_enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_linters_explicit = 1
+
+" Configure GoTo Definition
+" :LU -> Lookup -> GoToDefinition
+call SetupCommandAlias("LU", "ALEGoToDefinition -tab")
+
+
+
+
+" ## Other Plugin Settings ##
+
+
+" rust.vim wants this:
+filetype plugin indent on
+
+" Set up the Lightline status line plugin
+set laststatus=2 " Always show the status line
+let g:lightline = {
+    \     'active': {
+    \       'right': [
+    \                  [ 'lineinfo' ],
+    \                  [ 'percent' ],
+    \                  [ 'fileformat', 'fileencoding', 'filetype', 'bytenumber' ],
+    \                ],
+    \       'left': [
+    \                 [ 'mode', 'paste' ],
+    \                 [ 'readonly', 'filename', 'modified' ],
+    \                 [ 'buffernumber' ],
+    \               ],
+    \     },
+    \     'component': {
+    \       'bytenumber': '%o (%O)',
+    \       'buffernumber': '%n',
+    \     },
+    \ }
+set noshowmode " Don't show the editing mode the vim-native way
+
+
+
+
+" ## Plugins ##
+
+
 call plug#begin('~/.vim/plugs')
-Plug 'vim-python/python-syntax'
+" Status bar for Vim
+Plug 'itchyny/lightline.vim'
+" Nice commenting and uncommenting
 Plug 'scrooloose/nerdcommenter'
+" Easily align source code of .md or .tex tables
+Plug 'junegunn/vim-easy-align'
+" Asynchronous Lint Engine
+Plug 'dense-analysis/ale'
+" Code folding for python
 Plug 'tmhedberg/SimpylFold'
-Plug 'gruvbox-community/gruvbox'
-Plug 'godlygeek/tabular'
-Plug 'vim-syntastic/syntastic'
+" Rust Plugin
 Plug 'rust-lang/rust.vim'
-Plug 'Chiel92/vim-autoformat'
+" Syntax highlighter for PlantUML
+Plug 'aklt/plantuml-syntax'
 call plug#end()
 
