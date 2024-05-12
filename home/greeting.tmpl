@@ -1,0 +1,3 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+{{ $dyn.greeting }},
+you are using your {{ $dyn.config_name }} dotfiles configuration.
