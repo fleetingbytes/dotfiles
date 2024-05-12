@@ -1,14 +1,15 @@
-" ## Vim Behavior ##
+vim9script
+## Vim Behavior ##
 
 
-" Treat underscore '_' as word boundary:
+# Treat underscore '_' as word boundary:
 set iskeyword-=_
 
-" Encoding
+# Encoding
 set encoding=utf-8
 scriptencoding utf-8
 
-" Set file encodings
+# Set file encodings
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf8,prc
 if has("multi_byte")
@@ -16,182 +17,175 @@ if has("multi_byte")
     set encoding=utf-8
 endif
 
-" Open more than 16 tabs
+# Open more than 16 tabs
 set tabpagemax=20
 
 
 
 
-" ## Vim Visuals ##
+## Vim Visuals ##
 
 
-" Set syntax highlighting
+# Set syntax highlighting
 syntax on
 
-" Set color scheme
-"colorscheme gruvbox
-"set background=dark
-"highlight Comment cterm=italic
+# Set color scheme
+#colorscheme gruvbox
+#set background=dark
+#highlight Comment cterm=italic
 
-" Set visual beep
+# Set visual beep
 set visualbell
 
-" Show white space charaters
+# Show white space charaters
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
 set list
 set wrap
 set textwidth=0 wrapmargin=0
 set formatoptions-=t
 
-" Show relative line numbers
+# Show relative line numbers
 set number relativenumber
 
-" Show the number of occurrences of the search pattern
-" https://vi.stackexchange.com/questions/93/is-there-a-way-to-count-the-number-of-occurrences-of-a-word-in-a-file
+# Show the number of occurrences of the search pattern
+# https://vi.stackexchange.com/questions/93/is-there-a-way-to-count-the-number-of-occurrences-of-a-word-in-a-file
 set shortmess-=S
 
-" Set tab
-set tabstop=4 " Width of the tab character
-set softtabstop=4 " Fine-tunes the amount of white space to be added
-set shiftwidth=4 " Determines the amount ow white space to add in normal mode
-set expandtab " When inserting a tab character, replace it with spaces
+# Set tab
+set tabstop=4 # Width of the tab character
+set softtabstop=4 # Fine-tunes the amount of white space to be added
+set shiftwidth=4 # Determines the amount ow white space to add in normal mode
+set expandtab # When inserting a tab character, replace it with spaces
 
 
 
 
-" ## Useful commands and remaps ##
+## Useful commands and remaps ##
 
 
-" Remap the leader key to space
-"
+# Remap the leader key to space
+
 nnoremap <SPACE> <Nop>
-let mapleader=" "
+var mapleader = " "
 
-" edit $MYVIMRC
+# edit $MYVIMRC
 nnoremap <Leader>ev :tabedit $MYVIMRC<CR>
 
-" source $MYVIMRC
+# source $MYVIMRC
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
-" Quickly navigate between tabs
+# Quickly navigate between tabs
 nnoremap H gT
 nnoremap L gt
 
-" Pretty-print minified JSON files (depends on python), use it as :J
+# Pretty-print minified JSON files (depends on python), use it as :J
 command! J %!python -m json.tool
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
+# Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+# Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" XML folding (also folds .config files, presuming they are in XML)
-" " https://stackoverflow.com/a/46217327
+# XML folding (also folds .config files, presuming they are in XML)
+# https://stackoverflow.com/a/46217327
 augroup XML
     autocmd!
-    autocmd FileType xml let g:xml_syntax_folding=1
+    autocmd FileType xml g:xml_syntax_folding = 1
     autocmd FileType xml setlocal foldmethod=syntax
     autocmd FileType xml :syntax on
     autocmd FileType xml :%foldopen!
-    autocmd FileType config let g:xml_syntax_folding=1
+    autocmd FileType config g:xml_syntax_folding = 1
     autocmd FileType config setlocal foldmethod=syntax
     autocmd FileType config :syntax on
     autocmd FileType config :%foldopen!
 augroup END
 
-" Create function to create aliases for long commands, https://stackoverflow.com/a/3879737
-function! SetupCommandAlias(from, to)
-   exec 'cnoreabbrev <expr> '.a:from
-        \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
-        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
-endfunction
-
-" Greatest remap ever : Primeagen Blazingly Fast Vim Part 1
+# Greatest remap ever : Primeagen Blazingly Fast Vim Part 1
 xnoremap <leader>p "_dP
 xnoremap <leader>P "_d"*P
 
 
 
 
-" ## ALE Settings ##
+## ALE Settings ##
 
 
-let g:ale_linters = {
-    \ 'rust': ['analyzer'],
-    \ 'javascript': ['eslint'],
-    \ 'typescript': ['eslint', 'tsserver', 'typecheck'],
-    \ }
+g:ale_linters = {
+    'rust': ['analyzer'],
+    'javascript': ['eslint'],
+    'typescript': ['eslint', 'tsserver', 'typecheck'],
+    }
 
-let g:ale_fixers = {
-    \ 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
-    \ 'javascript': ['eslint'],
-    \ 'typescript': ['eslint'],
-    \ }
+g:ale_fixers = {
+    'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
+    'javascript': ['eslint'],
+    'typescript': ['eslint'],
+    }
 
-" As-you-type autocomplete
+# As-you-type autocomplete
 set completeopt=menu,menuone,preview,noselect,noinsert,longest
 set previewheight=27
-let g:ale_completion_enabled = 1
-let g:ale_fix_on_save_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_linters_explicit = 1
+g:ale_completion_enabled = 1
+g:ale_fix_on_save_enabled = 1
+g:ale_fix_on_save = 1
+g:ale_linters_explicit = 1
 
-" Configure GoTo Definition
-" :LU -> Lookup -> GoToDefinition
-call SetupCommandAlias("LU", "ALEGoToDefinition -tab")
-
-
+# Configure GoTo Definition
+# :LU -> Lookup -> GoToDefinition
+command! -nargs=* LU ALEGoToDefinition -tab
 
 
-" ## Other Plugin Settings ##
 
 
-" rust.vim wants this:
+## Other Plugin Settings ##
+
+
+# rust.vim wants this:
 filetype plugin indent on
 
-" Set up the Lightline status line plugin
-set laststatus=2 " Always show the status line
-let g:lightline = {
-    \     'active': {
-    \       'right': [
-    \                  [ 'lineinfo' ],
-    \                  [ 'percent' ],
-    \                  [ 'fileformat', 'fileencoding', 'filetype', 'bytenumber' ],
-    \                ],
-    \       'left': [
-    \                 [ 'mode', 'paste' ],
-    \                 [ 'readonly', 'filename', 'modified' ],
-    \                 [ 'buffernumber' ],
-    \               ],
-    \     },
-    \     'component': {
-    \       'bytenumber': '%o (%O)',
-    \       'buffernumber': '%n',
-    \     },
-    \ }
-set noshowmode " Don't show the editing mode the vim-native way
+# Set up the Lightline status line plugin
+set laststatus=2 # Always show the status line
+g:lightline = {
+          'active': {
+            'right': [
+                       [ 'lineinfo' ],
+                       [ 'percent' ],
+                       [ 'fileformat', 'fileencoding', 'filetype', 'bytenumber' ],
+                     ],
+            'left': [
+                      [ 'mode', 'paste' ],
+                      [ 'readonly', 'filename', 'modified' ],
+                      [ 'buffernumber' ],
+                    ],
+          },
+          'component': {
+            'bytenumber': '%o (%O)',
+            'buffernumber': '%n',
+          },
+      }
+set noshowmode # Don't show the editing mode the vim-native way
 
 
 
 
-" ## Plugins ##
+## Plugins ##
 
 
-call plug#begin('~/.vim/plugs')
-" Status bar for Vim
-Plug 'itchyny/lightline.vim'
-" Nice commenting and uncommenting
-Plug 'scrooloose/nerdcommenter'
-" Easily align source code of .md or .tex tables
-Plug 'junegunn/vim-easy-align'
-" Asynchronous Lint Engine
-Plug 'dense-analysis/ale'
-" Code folding for python
-Plug 'tmhedberg/SimpylFold'
-" Rust Plugin
-Plug 'rust-lang/rust.vim'
-" Syntax highlighter for PlantUML
-Plug 'aklt/plantuml-syntax'
-call plug#end()
+plug#begin('~/.vim/plugs')
+    # Status bar for Vim
+    Plug 'itchyny/lightline.vim'
+    # Nice commenting and uncommenting
+    Plug 'scrooloose/nerdcommenter'
+    # Easily align source code of .md or .tex tables
+    Plug 'junegunn/vim-easy-align'
+    # Asynchronous Lint Engine
+    Plug 'dense-analysis/ale'
+    # Code folding for python
+    Plug 'tmhedberg/SimpylFold'
+    # Rust Plugin
+    Plug 'rust-lang/rust.vim'
+    # Syntax highlighter for PlantUML
+    Plug 'aklt/plantuml-syntax'
+plug#end()
 
