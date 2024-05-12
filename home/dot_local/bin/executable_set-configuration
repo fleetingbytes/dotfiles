@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# Changes the dynamic dotfiles configuration
+#
+# The first positional argument must be the base name of a 
+# .json file located in $(chezmoi source-path)/_dynamic
+# but it must not be "dyn_config" becauce
+# that is the name of the generated configuration file.
+# Use some of the other json files, e.g. "default", "special", "other"
+#
+# Usage example:
+# set-configuration special
+
+set -e
+
+config_dir="$(chezmoi source-path)/_dynamic" 
+file_with_currently_selected_config=$(chezmoi source-path)/.chezmoidata/dynamic_configuration.toml
+
+if [ $1 = "dyn_config" ]; then 
+    printf "Must not use '%s' because that is the target configuration file to be generated\n", $1
+    exit 1
+fi
+
+if [ ! -e "$config_dir/$1.json" ]; then
+    printf "Cannot find %s.json\n" $1
+    exit 1
+fi
+
+printf "Changing configuration to %s\n" $1
+sed --in-place --regexp-extended "s/dynconfig\s?=\s?\"\w+\"/dynconfig = \"$1\"/" "$file_with_currently_selected_config"
+
+chezmoi apply
