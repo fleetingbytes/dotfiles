@@ -4,6 +4,7 @@
 [core]
     editor = /usr/bin/vim
     excludesFile = ~/.config/git/ignore
+    attributesFile = ~/.config/git/attributes
 [init]
     defaultBranch = master
 [pull]

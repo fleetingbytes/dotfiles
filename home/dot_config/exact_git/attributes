@@ -1,0 +1,2 @@
+* text=auto
+*.kdbx filter=lfs diff=lfs merge=lfs -text
