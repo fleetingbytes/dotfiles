@@ -1,6 +1,6 @@
 [user]
     name = fleetingbytes
-    email = sven.siegmund@gmail.com
+    email = 7075397+fleetingbytes@users.noreply.github.com
 [core]
     editor = /usr/bin/vim
     excludesFile = ~/.config/git/ignore
