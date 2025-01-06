@@ -2,6 +2,9 @@ vim9script
 ## Vim Behavior ##
 
 
+# Create .swp files in one central directory
+set directory=$HOME/.vim/swapfiles//
+
 # Treat underscore '_' as word boundary:
 set iskeyword-=_
 
@@ -25,14 +28,8 @@ set tabpagemax=20
 
 ## Vim Visuals ##
 
-
 # Set syntax highlighting
 syntax on
-
-# Set color scheme
-#colorscheme gruvbox
-#set background=dark
-#highlight Comment cterm=italic
 
 # Set visual beep
 set visualbell
@@ -55,6 +52,9 @@ set shortmess-=S
 set tabstop=4 # Width of the tab character
 set softtabstop=4 # Fine-tunes the amount of white space to be added
 set shiftwidth=4 # Determines the amount ow white space to add in normal mode
+#set tabstop=2 # Width of the tab character
+#set softtabstop=2 # Fine-tunes the amount of white space to be added
+#set shiftwidth=2 # Determines the amount ow white space to add in normal mode
 set expandtab # When inserting a tab character, replace it with spaces
 
 
@@ -64,9 +64,8 @@ set expandtab # When inserting a tab character, replace it with spaces
 
 
 # Remap the leader key to space
-
 nnoremap <SPACE> <Nop>
-var mapleader = " "
+g:mapleader = " "
 
 # edit $MYVIMRC
 nnoremap <Leader>ev :tabedit $MYVIMRC<CR>
@@ -112,12 +111,14 @@ xnoremap <leader>P "_d"*P
 
 
 g:ale_linters = {
+    'python': ['ruff'],
     'rust': ['analyzer'],
     'javascript': ['eslint'],
     'typescript': ['eslint', 'tsserver', 'typecheck'],
     }
 
 g:ale_fixers = {
+    'python': ['ruff', 'ruff_format'],
     'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
     'javascript': ['eslint'],
     'typescript': ['eslint'],
@@ -144,6 +145,27 @@ command! -nargs=* LU ALEGoToDefinition -tab
 # rust.vim wants this:
 filetype plugin indent on
 
+# Get the Unicode codepoint of the current character under the cursor
+def g:GetUnicodeCodepoint(): string
+    # Get the character under the cursor
+    var char = getline('.')[col('.') - 1]
+    # Convert it to its Unicode codepoint
+    var codepoint = char2nr(char)
+    # Return codepoint formatted in hex
+    return printf("U+%04X", codepoint)
+enddef
+
+def g:GetUtf8ByteSequence(): string
+  var char = getline('.')[col('.') - 1]
+  var codepoint = char2nr(char)
+  var utf8bytes = nr2char(codepoint, v:true)
+  var byte_sequence = ''
+  for byte in utf8bytes
+    byte_sequence ..= printf('%02x ', char2nr(byte))
+  endfor
+  return byte_sequence[ : -2]  # Remove the trailing space
+enddef
+
 # Set up the Lightline status line plugin
 set laststatus=2 # Always show the status line
 g:lightline = {
@@ -151,7 +173,8 @@ g:lightline = {
             'right': [
                        [ 'lineinfo' ],
                        [ 'percent' ],
-                       [ 'fileformat', 'fileencoding', 'filetype', 'bytenumber' ],
+                       #[ 'fileformat', 'fileencoding', 'filetype', 'bytenumber', 'unicode_codepoint', 'unicode_bytes' ],
+                       [ 'fileformat', 'fileencoding', 'filetype', 'bytenumber', 'unicode_codepoint' ],
                      ],
             'left': [
                       [ 'mode', 'paste' ],
@@ -163,6 +186,10 @@ g:lightline = {
             'bytenumber': '%o (%O)',
             'buffernumber': '%n',
           },
+          'component_function': {
+            'unicode_codepoint': 'GetUnicodeCodepoint',
+            #'unicode_bytes': 'GetUtf8ByteSequence',
+          },
       }
 set noshowmode # Don't show the editing mode the vim-native way
 
@@ -173,19 +200,39 @@ set noshowmode # Don't show the editing mode the vim-native way
 
 
 plug#begin('~/.vim/plugs')
+    # color scheme
+    Plug 'morhetz/gruvbox'
+    # fuzzy finder
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     # Status bar for Vim
     Plug 'itchyny/lightline.vim'
     # Nice commenting and uncommenting
     Plug 'scrooloose/nerdcommenter'
-    # Easily align source code of .md or .tex tables
+   # Easily align source code of .md or .tex tables
     Plug 'junegunn/vim-easy-align'
     # Asynchronous Lint Engine
     Plug 'dense-analysis/ale'
     # Code folding for python
     Plug 'tmhedberg/SimpylFold'
+    # Polyglot to highlight many languages, including Python
+    Plug 'sheerun/vim-polyglot'
     # Rust Plugin
     Plug 'rust-lang/rust.vim'
     # Syntax highlighter for PlantUML
     Plug 'aklt/plantuml-syntax'
+    # Highligh .csv in Excel dialect
+    Plug 'mechatroner/rainbow_csv'
 plug#end()
+
+
+# Set color scheme (need gruvbox installed and loaded first)
+g:gruvbox_contrast_dark = 'medium'
+g:gruvbox_contrast_light = 'medium'
+colorscheme gruvbox
+set background=dark
+highlight Comment cterm=italic
+
+# Rainbow_csv plugin settings
+# Interpret csv files as csv_semicolon filetype
+autocmd BufNewFile,BufRead *.csv   set filetype=rfc_semicolon
 
