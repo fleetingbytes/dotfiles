@@ -11,11 +11,17 @@ plug "zsh-users/zsh-autosuggestions"
 plug "zap-zsh/supercharge"
 plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
+plug "sdiebolt/zsh-ssh-agent"
 
 # Load and initialise completion system
 autoload -Uz compinit
 compinit
 
+# use the vi navigation keys in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
 
-# My own modifications
+# Load my environment variables
 source ~/.allenv
