@@ -1,9 +1,5 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=3000
-SAVEHIST=10000
+# Use vi-like keymaps
 bindkey -v
-# End of lines configured by zsh-newuser-install
 
 # Created by Zap installer
 [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
@@ -12,10 +8,6 @@ plug "zap-zsh/supercharge"
 plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "sdiebolt/zsh-ssh-agent"
-
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
 
 # use the vi navigation keys in menu completion
 bindkey -M menuselect 'h' vi-backward-char
