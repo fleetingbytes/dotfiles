@@ -20,6 +20,19 @@ bindkey "^N" vi-forward-word # accepts one word
 bindkey "^E" vi-backward-kill-word # unaccepts one word
 bindkey "^O" vi-forward-char # accepts the entire suggestion
 
+# Add something to path only if it isn't already there
+add_to_path() {
+    typeset -gU PATH
+    for dir; do
+        if [[ ! ":$PATH:" == *":$dir:"* ]]; then
+            PATH="$dir:$PATH"
+        fi
+    done
+}
+
+# extra paths:
+add_to_path "${HOME}/.local/bin" "$HOME/.cargo/bin"
+
 
 # Load my environment variables
 source ~/.allenv
