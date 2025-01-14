@@ -1,0 +1,19 @@
+#!/bin/sh
+# POSIX-compliant version of the ssh-deploy-key-wrapper script: http://www.webfactory.de/blog/using-multiple/ssh-deploy-keys-with-github
+
+# Get the last argument
+for last; do :; done
+
+# Don't use "exec" to run "ssh" below; then the trap won't work.
+key_file=$(mktemp -u)
+trap "rm -f $key_file" EXIT
+
+# Extract the repository path from the last argument
+last=$(echo "$last" | sed "s/.*'\(.*\)'.*/\1/")
+
+# Try to pick the right key
+ssh-add -L | grep --word-regexp --max-count 1 "$last" > "$key_file"
+
+ssh -v -i "$key_file" "$@" 2>/tmp/git-ssh-log
+
+echo "$last"

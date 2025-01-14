@@ -1,7 +1,8 @@
 DIFFCOLORS="auto"; export DIFFCOLORS
 EDITOR=/usr/local/bin/vim; export EDITOR
+GIT_SSH=~/.local/bin/ssh-deploy-key-wrapper
+LESS="R"; export LESS
 MANPAGER="less --use-color -Dd+b -Du+y"; export MANPAGER
 MANPATH=$MANPATH:/usr/local/share/man; export MANPATH
-LESS="R"; export LESS
 PAGER="less"; export PAGER
 VISUAL=$EDITOR
