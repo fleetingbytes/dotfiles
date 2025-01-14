@@ -15,5 +15,3 @@ last=$(echo "$last" | sed "s/.*'\(.*\)'.*/\1/")
 ssh-add -L | grep --word-regexp --max-count 1 "$last" > "$key_file"
 
 ssh -v -i "$key_file" "$@" 2>/tmp/git-ssh-log
-
-echo "$last"
