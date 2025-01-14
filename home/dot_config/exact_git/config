@@ -9,11 +9,11 @@
     defaultBranch = master
 [pull]
     ff = only
-[lfs "https://dotfiles.github.com/fleetingbytes/dotfiles.git/info/lfs"]
+[lfs "https://github.com/fleetingbytes/dotfiles.git/info/lfs"]
     locksverify = true
-[lfs "https://chazre.github.com/fleetingbytes/chazre.git/info/lfs"]
+[lfs "https://github.com/fleetingbytes/chazre.git/info/lfs"]
     locksverify = true
-[lfs "https://bootstrap.github.com/fleetingbytes/bootstrap.git/info/lfs"]
+[lfs "https://github.com/fleetingbytes/bootstrap.git/info/lfs"]
     locksverify = true
 [filter "lfs"]
     clean = git-lfs clean -- %f
