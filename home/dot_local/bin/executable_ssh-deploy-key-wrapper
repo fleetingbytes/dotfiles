@@ -47,7 +47,7 @@ log "All arguments: $*"
 last_argument=$(get_last_argument "$@")
 log "Last argument: $last_argument"
 partial_repo_url=$(get_partial_repo_url "$last_argument")
-log "Partial repo url: $last_argument"
+log "Partial repo url: $partial_repo_url"
 
 if key_file=$(make_temporary_public_key_file "$partial_repo_url"); then
     trap "rm -f $key_file" EXIT
