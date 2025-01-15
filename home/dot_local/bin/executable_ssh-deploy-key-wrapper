@@ -5,10 +5,24 @@ get_last_argument() {
     printf "%s" "$__last_argument"
 }
 
+is_this_a_git_lfs_command() {
+    local some_string=$1
+    echo "$some_string" | grep --quiet --fixed-strings "git-lfs-authenticate"
+}
+
+extract_partial_repo_url_from_git_lfs_command() {
+    local lfs_command=$1
+    echo "$lfs_command" | awk '{print $2}'
+}
+
 get_partial_repo_url() {
     local string_including_the_partial_repo_url=$1
-    local result=$(printf "%s" "$string_including_the_partial_repo_url" | sed "s/.*'\(.*\.git\)'.*/\1/")
-    printf "%s" "$result"
+    local maybe_usable_result=$(printf "%s" "$string_including_the_partial_repo_url" | sed "s/.*'\(.*\.git\)'.*/\1/")
+    if is_this_a_git_lfs_command $maybe_usable_result; then
+        printf "%s" $(extract_partial_repo_url_from_git_lfs_command "$maybe_usable_result")
+    else
+        printf "%s" "$maybe_usable_result"
+    fi
 }
 
 make_temporary_public_key_file() {
@@ -17,7 +31,7 @@ make_temporary_public_key_file() {
     if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
         printf "%s" "$__key_file"
     else
-        printf "Failed to find an ssh key\n" >&2
+        printf "Failed to find an ssh key when looking for %s\n" "$__partial_repo_url" >&2
         rm -f "$__key_file" 2>/dev/null
         return 1
     fi
