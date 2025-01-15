@@ -43,7 +43,7 @@ make_temporary_public_key_file() {
 delete_wrapper_log_file
 
 log "Wrapper started at $(date)"
-log "All arguments: $@"
+log "All arguments: $*"
 last_argument=$(get_last_argument "$@")
 log "Last argument: $last_argument"
 partial_repo_url=$(get_partial_repo_url "$last_argument")
