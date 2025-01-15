@@ -1,49 +1,57 @@
 #!/bin/sh
 
+WRAPPER_LOG_FILE=$(mktemp "/tmp/git-ssh-wrapper-log.XXXXXX")
+SSH_LOG_FILE="/tmp/git-ssh-log"
+
+
+log() {
+    if [ -n "$GIT_SSH_WRAPPER_LOG" ]; then
+        echo "$1" >> "$WRAPPER_LOG_FILE"
+    fi
+}
+
+delete_wrapper_log_file() {
+    rm -f "$WRAPPER_LOG_FILE" 2>/dev/null
+}
+
 get_last_argument() {
     for __last_argument; do :; done
     printf "%s" "$__last_argument"
 }
 
-is_this_a_git_lfs_command() {
-    local some_string=$1
-    echo "$some_string" | grep --quiet --fixed-strings "git-lfs-authenticate"
-}
-
-extract_partial_repo_url_from_git_lfs_command() {
-    local lfs_command=$1
-    echo "$lfs_command" | awk '{print $2}'
-}
-
 get_partial_repo_url() {
     local string_including_the_partial_repo_url=$1
-    local maybe_usable_result=$(printf "%s" "$string_including_the_partial_repo_url" | sed "s/.*'\(.*\.git\)'.*/\1/")
-    if is_this_a_git_lfs_command $maybe_usable_result; then
-        printf "%s" $(extract_partial_repo_url_from_git_lfs_command "$maybe_usable_result")
-    else
-        printf "%s" "$maybe_usable_result"
-    fi
+    local result=$(printf "%s" "$string_including_the_partial_repo_url" | grep --extended-regexp --only-matching '[-[:alnum:]_/]+\.git')
+    printf "%s" "$result"
 }
 
 make_temporary_public_key_file() {
     local __partial_repo_url=$1
     local __key_file=$(mktemp "/tmp/git-ssh-public-key.XXXXXX")
     if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
+        log "Deploy key found and written to $__key_file"
         printf "%s" "$__key_file"
     else
+        log "Deploy key NOT FOUND"
         printf "Failed to find an ssh key when looking for %s\n" "$__partial_repo_url" >&2
         rm -f "$__key_file" 2>/dev/null
+        log "Deleted empty $__key_file"
         return 1
     fi
 }
 
+delete_wrapper_log_file
+
+log "Wrapper started at $(date)"
+log "All arguments: $@"
 last_argument=$(get_last_argument "$@")
+log "Last argument: $last_argument"
 partial_repo_url=$(get_partial_repo_url "$last_argument")
-ssh_log_file="/tmp/git-ssh-log"
+log "Partial repo url: $last_argument"
 
 if key_file=$(make_temporary_public_key_file "$partial_repo_url"); then
     trap "rm -f $key_file" EXIT
-    ssh -v -i "$key_file" -E "$ssh_log_file" "$@"
+    ssh -v -i "$key_file" -E "$SSH_LOG_FILE" "$@"
 else
-    ssh -E "$ssh_log_file" "$@"
+    ssh -E "$SSH_LOG_FILE" "$@"
 fi
