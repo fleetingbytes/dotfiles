@@ -44,9 +44,7 @@ make_temporary_public_key_file() {
     fi
 }
 
-delete_wrapper_log_file
-
-log "Wrapper started at $(date)"
+log "Wrapper started at $(date -Ins)"
 log "All arguments: $*"
 last_argument=$(get_last_argument "$@")
 log "Last argument: $last_argument"
