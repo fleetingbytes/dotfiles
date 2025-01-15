@@ -1,17 +1,35 @@
 #!/bin/sh
-# POSIX-compliant version of the ssh-deploy-key-wrapper script: http://www.webfactory.de/blog/using-multiple/ssh-deploy-keys-with-github
 
-# Get the last argument
-for last; do :; done
+get_last_argument() {
+    for __last_argument; do :; done
+    printf "%s" "$__last_argument"
+}
 
-# Don't use "exec" to run "ssh" below; then the trap won't work.
-key_file=$(mktemp -u)
-trap "rm -f $key_file" EXIT
+get_partial_repo_url() {
+    local string_including_the_partial_repo_url=$1
+    local result=$(printf "%s" "$string_including_the_partial_repo_url" | sed "s/.*'\(.*\.git\)'.*/\1/")
+    printf "%s" "$result"
+}
 
-# Extract the repository path from the last argument
-last=$(echo "$last" | sed "s/.*'\(.*\)'.*/\1/")
+make_temporary_public_key_file() {
+    local __partial_repo_url=$1
+    local __key_file=$(mktemp "/tmp/git-ssh-public-key.XXXXXX")
+    if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
+        printf "%s" "$__key_file"
+    else
+        printf "Failed to find an ssh key\n" >&2
+        rm -f "$__key_file" 2>/dev/null
+        return 1
+    fi
+}
 
-# Try to pick the right key
-ssh-add -L | grep --word-regexp --max-count 1 "$last" > "$key_file"
+last_argument=$(get_last_argument "$@")
+partial_repo_url=$(get_partial_repo_url "$last_argument")
+ssh_log_file="/tmp/git-ssh-log"
 
-ssh -v -i "$key_file" "$@" 2>/tmp/git-ssh-log
+if key_file=$(make_temporary_public_key_file "$partial_repo_url"); then
+    trap "rm -f $key_file" EXIT
+    ssh -v -i "$key_file" -E "$ssh_log_file" "$@"
+else
+    ssh -E "$ssh_log_file" "$@"
+fi
