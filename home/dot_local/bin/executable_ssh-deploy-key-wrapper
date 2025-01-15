@@ -27,6 +27,10 @@ get_partial_repo_url() {
 
 make_temporary_public_key_file() {
     local __partial_repo_url=$1
+    if [ -z "$__partial_repo_url" ]; then
+        log "Not making a temporary deploy key file for there is no partial repo url"
+        return 2
+    fi
     local __key_file=$(mktemp "/tmp/git-ssh-public-key.XXXXXX")
     if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
         log "Deploy key found and written to $__key_file"
