@@ -1,0 +1,5 @@
+--theme=gruvbox-dark
+
+--map-syntax ".chezmoiignore:Git Ignore"
+--map-syntax "**/zshrc.d/*:Bourne Again Shell (bash)"
+--map-syntax "**/lib/*-lib:Bourne Again Shell (bash)"
