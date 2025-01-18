@@ -1,0 +1,6 @@
+load_github_deploy_keys() {
+    ssh-add -l > /dev/null 2>&1 || find "$HOME/.ssh/github_deploy_keys" -type f -maxdepth 1 ! -name "*.*" | xargs ssh-add -q
+}
+
+load_github_deploy_keys
+

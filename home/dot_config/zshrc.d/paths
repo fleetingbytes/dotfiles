@@ -1,0 +1,13 @@
+# Add something to path only if it isn't already there
+add_to_path() {
+    typeset -gU PATH
+    for dir; do
+        if [[ ! ":$PATH:" == *":$dir:"* ]]; then
+            PATH="$dir:$PATH"
+        fi
+    done
+}
+
+# extra paths:
+add_to_path "$HOME/.cargo/bin" "$HOME/.local/bin" 
+

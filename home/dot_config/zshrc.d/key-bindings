@@ -1,0 +1,14 @@
+# Use vi-like keymaps
+bindkey -v
+
+# use the vi navigation keys in menu completion
+bindkey -M menuselect "h" vi-backward-char
+bindkey -M menuselect "k" vi-up-line-or-history
+bindkey -M menuselect "l" vi-forward-char
+bindkey -M menuselect "j" vi-down-line-or-history
+
+# bind keys for accepting suggestions in vi insert mode
+bindkey "^N" vi-forward-word # accepts one word
+bindkey "^E" vi-backward-kill-word # unaccepts one word
+bindkey "^O" vi-forward-char # accepts the entire suggestion
+
