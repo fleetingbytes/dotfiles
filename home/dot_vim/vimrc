@@ -235,4 +235,7 @@ highlight Comment cterm=italic
 # Rainbow_csv plugin settings
 # Interpret csv files as csv_semicolon filetype
 autocmd BufNewFile,BufRead *.csv   set filetype=rfc_semicolon
-
+autocmd BufNewFile,BufRead *dot_ssh/config   set filetype=sshconfig
+autocmd BufNewFile,BufRead */zshrc.d/*,*/dot_zshrc   set filetype=zsh
+autocmd BufNewFile,BufRead */dot_local/bin/*   set filetype=sh
+autocmd BufNewFile,BufRead */lib/*-lib   set filetype=sh
