@@ -1,7 +1,7 @@
 #!/bin/sh
 
-WRAPPER_LOG_FILE=$(mktemp "/tmp/git-ssh-wrapper-log.XXXXXX")
-SSH_LOG_FILE="/tmp/git-ssh-log"
+WRAPPER_LOG_FILE=$(mktemp --tmpdir=${TMPDIR:-$HOME} "git-ssh-wrapper-log.XXXXXX")
+SSH_LOG_FILE="${TMPDIR:-$HOME}/git-ssh-log"
 
 
 log() {
@@ -31,7 +31,7 @@ make_temporary_public_key_file() {
         log "Not making a temporary deploy key file for there is no partial repo url"
         return 2
     fi
-    local __key_file=$(mktemp "/tmp/git-ssh-public-key.XXXXXX")
+    local __key_file=$(mktemp "${TMPDIR:-$HOME}/git-ssh-public-key.XXXXXX")
     if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
         log "Deploy key found and written to $__key_file"
         printf "%s" "$__key_file"
@@ -44,6 +44,11 @@ make_temporary_public_key_file() {
     fi
 }
 
+write_ssh_session_header_to_log_file() {
+    printf "\n" >> "$SSH_LOG_FILE"
+    printf "SSH session started at $(date -Ins)\n" >> "$SSH_LOG_FILE"
+}
+
 log "Wrapper started at $(date -Ins)"
 log "All arguments: $*"
 last_argument=$(get_last_argument "$@")
@@ -51,6 +56,7 @@ log "Last argument: $last_argument"
 partial_repo_url=$(get_partial_repo_url "$last_argument")
 log "Partial repo url: $partial_repo_url"
 
+write_ssh_session_header_to_log_file
 if key_file=$(make_temporary_public_key_file "$partial_repo_url"); then
     trap "rm -f $key_file" EXIT
     ssh -v -i "$key_file" -E "$SSH_LOG_FILE" "$@"
