@@ -21,7 +21,7 @@ get_last_argument() {
 
 get_partial_repo_url() {
     local string_including_the_partial_repo_url=$1
-    local result=$(printf "%s" "$string_including_the_partial_repo_url" | grep --extended-regexp --only-matching '[-[:alnum:]_/]+\.git')
+    local result=$(printf "%s" "$string_including_the_partial_repo_url" | grep --extended-regexp --only-matching '[-[:alnum:]_]/[-[:alnum:]_]+\.git')
     printf "%s" "$result"
 }
 
