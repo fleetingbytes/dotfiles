@@ -1,0 +1,15 @@
+# Created by Zap installer
+[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
+plug "zsh-users/zsh-autosuggestions"
+plug "zap-zsh/supercharge"
+plug "zap-zsh/zap-prompt"
+plug "zsh-users/zsh-syntax-highlighting"
+plug "sdiebolt/zsh-ssh-agent"
+
+# Source my startup files
+startup_dir="${ZDOTDIR:-$HOME/.config/zdotdir}/startup"
+find "$startup_dir" -type f | while read -r file; do
+    . "$file"
+done
+
+change_from_chezmoi_working_tree_to_source_path

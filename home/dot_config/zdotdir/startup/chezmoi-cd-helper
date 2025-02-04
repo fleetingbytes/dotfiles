@@ -1,0 +1,5 @@
+function change_from_chezmoi_working_tree_to_source_path() {
+    if [[ "$(pwd)" = "$(dirname $(chezmoi source-path))" ]]; then
+        cd "$(chezmoi source-path)"
+    fi
+}

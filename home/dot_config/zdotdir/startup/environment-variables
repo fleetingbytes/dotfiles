@@ -1,0 +1,10 @@
+export DIFFCOLORS="auto"
+export EDITOR=/usr/local/bin/vim
+export GIT_SSH_COMMAND=~/.local/bin/ssh-deploy-key-wrapper
+export GIT_SSH_WRAPPER_LOG=1
+export LESS="R"
+export MANPAGER="less --use-color -Dd+b -Du+y"
+export MANPATH=$MANPATH:/usr/local/share/man
+export PAGER="less"
+export TMPDIR="/tmp"
+export VISUAL=$EDITOR
