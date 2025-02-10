@@ -44,7 +44,7 @@ make_temporary_public_key_file() {
 }
 
 write_ssh_session_header_to_log_file() {
-    printf "\n" >> "$SSH_LOG_FILE"
+    [ -s "$SSH_LOG_FILE" ] && printf "\n" >> "$SSH_LOG_FILE"
     printf "SSH session started at $(date -Ins)\n" >> "$SSH_LOG_FILE"
     printf "PPID: %u\n" $PPID >> "$SSH_LOG_FILE"
 }
