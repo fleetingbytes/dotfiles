@@ -1,8 +1,0 @@
-#
-# ~/.bash_profile
-#
-
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-# Cargo environment settings
-. "$HOME/.cargo/env"
