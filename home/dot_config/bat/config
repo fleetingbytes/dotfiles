@@ -4,5 +4,6 @@
 --map-syntax "**/.config/git/config:Git Config"
 --map-syntax "**/.config/git/ignore:Git Ignore"
 --map-syntax ".chezmoiignore:Git Ignore"
---map-syntax "**/zshrc.d/*:Bourne Again Shell (bash)"
+--map-syntax "**/zdotdir/*:Bourne Again Shell (bash)"
 --map-syntax "**/lib/*-lib:Bourne Again Shell (bash)"
+--map-syntax "**/git-ssh-wrapper-logs.*/*-lib:Plain Text"
