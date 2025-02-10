@@ -1,7 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-WRAPPER_LOG_FILE=$(mktemp --tmpdir=${TMPDIR:-$HOME} "git-ssh-wrapper-log.XXXXXX")
-SSH_LOG_FILE="${TMPDIR:-$HOME}/git-ssh-log"
+
+LOG_DIR="${TMPDIR:-$HOME}/git-ssh-wrapper-logs.${PPID}"
+mkdir -p "$LOG_DIR"
+WRAPPER_LOG_FILE=$(mktemp --tmpdir=$LOG_DIR "wrapper-log.XX")
+SSH_LOG_FILE="$LOG_DIR/git-ssh-log"
 
 
 log() {
