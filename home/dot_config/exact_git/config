@@ -5,6 +5,8 @@
     editor = /usr/bin/vim
     excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
+[safe]
+    directory = /usr/ports
 [init]
     defaultBranch = master
 [pull]
