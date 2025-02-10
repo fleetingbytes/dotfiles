@@ -10,10 +10,6 @@ log() {
     fi
 }
 
-delete_wrapper_log_file() {
-    rm -f "$WRAPPER_LOG_FILE" 2>/dev/null
-}
-
 get_last_argument() {
     for __last_argument; do :; done
     printf "%s" "$__last_argument"
@@ -47,9 +43,11 @@ make_temporary_public_key_file() {
 write_ssh_session_header_to_log_file() {
     printf "\n" >> "$SSH_LOG_FILE"
     printf "SSH session started at $(date -Ins)\n" >> "$SSH_LOG_FILE"
+    printf "PPID: %u\n" $PPID >> "$SSH_LOG_FILE"
 }
 
 log "Wrapper started at $(date -Ins)"
+log "PPID: $PPID"
 log "All arguments: $*"
 last_argument=$(get_last_argument "$@")
 log "Last argument: $last_argument"
