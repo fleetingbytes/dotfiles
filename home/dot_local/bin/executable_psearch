@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+search() {
+    if [ $# -eq 0 ]; then
+        echo "No arguments provided."
+        return 1
+    fi
+    grep --extended-regexp --recursive --files-with-matches --exclude-dir={.ruff_cache,.pytest_cache,__pycache__,build,dist,.git,.vscode,target} $1 . | fzf --preview='bat --style=numbers --color=always {}' --preview-window 'right:65%'
+}
+
+search $1
