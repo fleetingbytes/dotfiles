@@ -7,7 +7,7 @@
 # the contents of the files change and thus the contents of this script change.
 # packages.yml hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
 
-set -e
+set -ev
 
 termux-setup-storage
 termux-change-repo
@@ -18,9 +18,8 @@ echo "ZDOTDIR={{ $dyn.zdotdir }}" > "$HOME/.zshenv"
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 pkg install 
-{{- range .packages.linux.termux.pkg }} {{ . | quote }}{{ end -}}
+{{- range .packages.linux.termux.pkg }} {{ . | quote }}{{ end }}
 pip install --upgrade 
-{{- range .packages.linux.termux.pip }} {{ . | quote }}{{ end -}}
-
+{{- range .packages.linux.termux.pip }} {{ . | quote }}{{ end }}
 
 {{- end -}}
