@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Mapping
 from socket import gethostname
 from os import getenv
+from tempfile import gettempdir
 
 
 argument_parser = argparse.ArgumentParser("Generate dynamic chezmoi templates")
@@ -32,14 +33,14 @@ def common_data() -> Mapping[str, str]:
     """
     host = gethostname()
     home = Path(getenv("HOME", default=""))
-    username = getenv("USER", default="")
-    environments_path = home / "envs"
-    src_path = home / "src"
-    bootstrap_path = src_path / "bootstrap"
+    username = getenv("USER", default="dotfiles_user")
+    downloads_directory = home / "Downloads"
+    if on_termux():
+        downloads_directory = home / "storage" / "shared" / "Download"
     result = dict((
-        ("env", environments_path.as_posix()),
-        ("src", src_path.as_posix()),
-        ("bootstrap_path", bootstrap_path.as_posix()),
+        ("temporary_directory", gettempdir())
+        ("zdotdir", (home / ".config" / "zdotdir").as_posix())
+        ("youtube_downloads", (downloads_directory / "yt").as_posix())
         ))
     return result
 
@@ -48,7 +49,6 @@ def main() -> None:
     source_file = Path(cli_args.source).with_suffix(".json")
     with open(source_file, mode="r", encoding="utf-8") as js:
         source_json = json.load(js)
-        # add common data
         source_json.update(common_data())
         with open(cli_args.target, mode="w", encoding="utf-8") as target_file:
             json.dump(source_json, target_file, indent=4)

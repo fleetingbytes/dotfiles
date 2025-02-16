@@ -1,10 +1,12 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
 export DIFFCOLORS="auto"
-export EDITOR=/usr/local/bin/vim
+export EDITOR=vim
 export GIT_SSH_COMMAND=~/.local/bin/ssh-deploy-key-wrapper
 export GIT_SSH_WRAPPER_LOG=1
 export LESS="R"
 export MANPAGER="less --use-color -Dd+b -Du+y"
 export MANPATH=$MANPATH:/usr/local/share/man
 export PAGER="less"
-export TMPDIR="/tmp"
+export TMPDIR="{{ $dyn.temporary_directory }}"
 export VISUAL=$EDITOR
+
