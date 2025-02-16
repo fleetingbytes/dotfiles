@@ -3,7 +3,7 @@
 
 LOG_DIR="${TMPDIR:-$HOME}/git-ssh-wrapper-logs.${PPID}"
 mkdir -p "$LOG_DIR"
-WRAPPER_LOG_FILE=$(mktemp --tmpdir=$LOG_DIR "wrapper-log.XX")
+WRAPPER_LOG_FILE=$(mktemp --tmpdir=$LOG_DIR "wrapper-log.XXXX")
 SSH_LOG_FILE="$LOG_DIR/git-ssh-log"
 
 
