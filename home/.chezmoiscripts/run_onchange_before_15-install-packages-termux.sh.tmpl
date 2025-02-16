@@ -19,6 +19,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 pkg install 
 {{- range .packages.linux.termux.pkg }} {{ . | quote }}{{ end }}
+
+chsh -s zsh
+
 pip install --upgrade 
 {{- range .packages.linux.termux.pip }} {{ . | quote }}{{ end }}
 
