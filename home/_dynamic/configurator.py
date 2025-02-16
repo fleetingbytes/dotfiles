@@ -47,9 +47,9 @@ def common_data() -> Mapping[str, str]:
     if on_termux():
         downloads_directory = home / "storage" / "shared" / "Download"
     result = dict((
-        ("temporary_directory", gettempdir())
-        ("zdotdir", (home / ".config" / "zdotdir").as_posix())
-        ("youtube_downloads", (downloads_directory / "yt").as_posix())
+        ("temporary_directory", gettempdir()),
+        ("zdotdir", (home / ".config" / "zdotdir").as_posix()),
+        ("youtube_downloads", (downloads_directory / "yt").as_posix()),
         ))
     return result
 
