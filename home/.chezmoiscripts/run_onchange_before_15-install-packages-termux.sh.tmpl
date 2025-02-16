@@ -1,0 +1,26 @@
+{{- if eq .chezmoi.os "android" -}}
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+#!{{ lookPath "sh" }}
+
+# The following hashes are included in this script so that it is only run when
+# the contents of the files change and thus the contents of this script change.
+# packages.yml hash: {{ include ".chezmoidata/packages.yml" | sha256sum }}
+
+set -e
+
+termux-setup-storage
+termux-change-repo
+apt update
+apt upgrade
+echo "ZDOTDIR={{ $dyn.zdotdir }}" > "~/.zshenv"
+# Termux does not let chezmoi download the plug.vim file from inside the chezmoi apply process. ¯\_(ツ)_/¯
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+pkg install 
+{{- range .packages.linux.termux.pkg }} {{ . | quote }}{{ end -}}
+pip install --upgrade 
+{{- range .packages.linux.termux.pip }} {{ . | quote }}{{ end -}}
+
+
+{{- end -}}

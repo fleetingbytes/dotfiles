@@ -1,0 +1,13 @@
+# Scripts in .chezmoiscripts will use this data to install the appropriate
+# packages on a given platform.
+packages:
+  linux:
+    termux:
+      pkg:
+        - zsh
+        - ffmpeg
+        - eza
+        - bat
+        - vim
+      pip:
+        - yt-dlp
