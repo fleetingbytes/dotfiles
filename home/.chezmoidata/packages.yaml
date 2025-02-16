@@ -9,5 +9,6 @@ packages:
         - eza
         - bat
         - vim
+        - which
       pip:
         - yt-dlp
