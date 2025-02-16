@@ -25,6 +25,15 @@ argument_parser.add_argument(
 cli_args = argument_parser.parse_args()
 
 
+def on_termux() -> bool:
+    expected_prefix =  "/data/data/com.termux/files/usr"
+    return all((
+        getenv("TERMUX_VERSION"),
+        getenv("PREFIX") == expected_prefix,
+        Path(expected_prefix).is_dir(),
+    ))
+
+
 def common_data() -> Mapping[str, str]:
     """
     Returns a dictionary with common data
