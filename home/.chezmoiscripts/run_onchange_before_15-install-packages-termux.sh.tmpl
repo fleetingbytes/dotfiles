@@ -10,7 +10,6 @@
 set -ev
 
 termux-setup-storage
-termux-change-repo
 apt update
 apt upgrade
 echo "ZDOTDIR={{ $dyn.zdotdir }}" > "$HOME/.zshenv"
