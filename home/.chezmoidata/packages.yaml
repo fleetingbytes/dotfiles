@@ -10,6 +10,7 @@ packages:
         - eza
         - bat
         - vim
+        - gh
         - ffmpeg
       pip:
         - yt-dlp
