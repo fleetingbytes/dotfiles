@@ -5,10 +5,11 @@ packages:
     termux:
       pkg:
         - zsh
-        - ffmpeg
+        - man
+        - which
         - eza
         - bat
         - vim
-        - which
+        - ffmpeg
       pip:
         - yt-dlp
