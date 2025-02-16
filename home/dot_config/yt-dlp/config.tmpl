@@ -1,0 +1,4 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+-P {{ $dyn.youtube_downloads | quote }}
+-S height:1080
+-N3
