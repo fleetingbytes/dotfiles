@@ -22,7 +22,7 @@ Thanks to the [template generation script][template-generation-script] the `yout
 The nice thing is that the values in the `_dynamic/dyn_config.json` don't have to change just on some hardware or software based logic but can cange based on pretty much any logic I want at any time I want.
 This is implemented as a configuration profile (or simply *configuration*) which can be changed on the fly by me running the script [set-configuration][set-configuration].
 That script sets the name of the desired configuration profile in [.chezmoidata/dynamic_configuration.toml][dynamic-configuration-toml].
-By this, chezmoi knows what configuration profile I want to use and exposes this information to the template files in the `{{ .dynconfig }}` datum. (The use can view the set configuration by `chezmoi data | grep dynconfig`, or `chezmoi execute-template '{{ .dynconfig }}'`.
+By this, chezmoi knows what configuration profile I want to use and exposes this information to the template files in the `{{ .dynconfig }}` datum. (The user can view the currently set configuration by `chezmoi data | grep dynconfig`, or `chezmoi execute-template '{{ .dynconfig }}'`.)
 
 Most crucially, the `{{ .dynconfig }}` value is used by the aforementioned [template generation script][template-generation-script].
 The value is fed to the Python script [configurator.py][configurator-py] in which all the configuration logic resides.
