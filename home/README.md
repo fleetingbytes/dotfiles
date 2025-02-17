@@ -1,7 +1,5 @@
 # Dynamically Generated Template Values
 
-Sorry, I still have not written a proper documentation of how dynamic templates work. Here is the concept:
-
 At the very beginning of the `chezmoi apply` procedure, the [template generation script][template-generation-script] `10_generate_dynamic_template.sh` (which itself is a template) is run.
 It generates the JSON file `_dynamic/dyn_config.json` (which is ignored by .gitignore).
 Almost all template files I use have this line somewhere at the beginning of their content:
