@@ -30,9 +30,9 @@ It is this Python script which actually generates and creates or overwrites the 
 
 As a showcase of dynamically changing template values, I created three different configuration profiles: [default][default], [other][other], and [special][special].
 They contain a greeting phrase by which I want to be greeted when I apply my dotfiles, and (redundantly) their respective config name. The [configurator.py][configurator-py] script reads the data of these configuration profiles and could potentially use them in its logic. Currently it plainly merges them into the resulting `_dynamic/dyn_config.json`.
-Based on these values, a [MOTD][motd]-like file [greeting][greeting-tmpl] is generated and printed out by the [95-greeting.sh][greeting-sh] script at the end of the `chezmoi apply` procedure.
+The [MOTD][motd]-like file [greeting][greeting-tmpl] is generated based on the values in `_dynamic/dyn_config.json`. It is printed out by the [95-greeting.sh][greeting-sh] script at the end of the `chezmoi apply` procedure.
 
-Thus, the [greeting][greeting-tmpl] file can have any of these possible contents:
+Ultimately, the [greeting][greeting-tmpl] file can have any of the following contents:
 
 default:
 ```
@@ -52,13 +52,13 @@ How do you do, fleetingbytes,
 you are using your special dotfiles configuration.
 ```
 
-And it can be switched as I need it by me running the [set-configuration][set-configuration] script. This way I can change a configuration file, or even the contents of an executable script by switching my dotfiles configuration.
+And its content can be switched as I need it by me running the [set-configuration][set-configuration] script. This way I can change a configuration file or even the contents of an executable script by switching my dotfiles configuration.
 
 [configurator-py]: https://github.com/fleetingbytes/dotfiles/blob/master/home/_dynamic/configurator.py
 [default]: https://github.com/fleetingbytes/dotfiles/blob/master/home/_dynamic/default.json
 [dynamic-configuration-toml]: https://github.com/fleetingbytes/dotfiles/blob/master/home/.chezmoidata/dynamic_configuration.toml
 [greeting-sh]: https://github.com/fleetingbytes/dotfiles/blob/master/home/.chezmoiscripts/run_after_95_greeting.sh.tmpl
-[greeting-toml]: https://github.com/fleetingbytes/dotfiles/blob/master/home/greeting.tmpl
+[greeting-tmpl]: https://github.com/fleetingbytes/dotfiles/blob/master/home/greeting.tmpl
 [motd]: https://en.wikipedia.org/wiki/Message_of_the_day 
 [other]: https://github.com/fleetingbytes/dotfiles/blob/master/home/_dynamic/other.json
 [set-configuration]: https://github.com/fleetingbytes/dotfiles/blob/master/home/dot_local/bin/executable_set-configuration
