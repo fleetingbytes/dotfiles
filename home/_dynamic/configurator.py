@@ -50,6 +50,7 @@ def common_data() -> Mapping[str, str]:
         ("temporary_directory", gettempdir()),
         ("zdotdir", (home / ".config" / "zdotdir").as_posix()),
         ("youtube_downloads", (downloads_directory / "yt").as_posix()),
+        ("on_termux", on_termux()),
         ))
     return result
 
