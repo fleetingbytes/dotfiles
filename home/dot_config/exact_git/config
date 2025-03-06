@@ -2,7 +2,7 @@
     name = fleetingbytes
     email = 7075397+fleetingbytes@users.noreply.github.com
 [core]
-    editor = /usr/bin/vim
+    editor = vim
     excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
 [safe]
