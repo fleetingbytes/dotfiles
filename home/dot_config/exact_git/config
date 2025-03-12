@@ -22,3 +22,7 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[alias]
+    pushf = !"git push --force-with-lease --force-if-includes #"
+    tree = log --all --decorate --abbrev-commit --pretty=format:'%x09%C(auto)%h %<(50,trunc)%s %d' --graph
+    plog = log --decorate --abbrev-commit --pretty=format:'%C(auto)%h %<(50,trunc)%s %<(10,trunc)%aN %d'
