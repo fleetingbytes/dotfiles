@@ -80,6 +80,15 @@ nnoremap L gt
 # Pretty-print minified JSON files (depends on python), use it as :J
 command! J %!python -m json.tool
 
+# Print current timestamp, use it as :D
+def InsertIsoTimestamp()
+    var ts = system('date -Iseconds')->trim()
+    # Insert after cursor position
+    setline('.', getline('.')[0 : col('.') - 1] .. ts .. getline('.')[col('.') :])
+enddef
+
+command! D call InsertIsoTimestamp()
+
 # Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
