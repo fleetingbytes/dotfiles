@@ -5,6 +5,8 @@
     editor = vim
     excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
+    autocrlf = input
+    eol = lf
 [safe]
     directory = /usr/ports
 [init]
