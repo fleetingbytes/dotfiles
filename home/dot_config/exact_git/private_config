@@ -9,6 +9,7 @@
     eol = lf
 [safe]
     directory = /usr/ports
+	directory = /storage/emulated/0/chazre
 [init]
     defaultBranch = master
 [pull]
