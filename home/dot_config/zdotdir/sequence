@@ -1,0 +1,19 @@
+. /etc/zshenv
+. $ZDOTDIR/.zshenv
+
+if login_shell:
+    . /etc/zprofile
+    . $ZDOTDIR/.zprofile
+
+if interactive:
+    . /etc/zshrc
+    . $ZDOTDIR/.zshrc
+
+if login_shell:
+    . /etc/zlogin
+    . $ZDOTDIR/.zlogin
+
+yield  # here the shell does what you tell it to do
+
+. $ZDOTDIR/.zlogout
+. /etc/zlogout
