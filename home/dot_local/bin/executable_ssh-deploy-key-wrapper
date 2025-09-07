@@ -31,7 +31,7 @@ make_temporary_public_key_file() {
         return 2
     fi
     local __key_file=$(mktemp "${TMPDIR:-$HOME}/git-ssh-public-key.XXXXXX")
-    if ssh-add -L | grep --fixed-strings --max-count=1 "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
+    if ssh-add -L | grep --fixed-strings "$__partial_repo_url" > "$__key_file" && [ -s "$__key_file" ]; then
         log "Deploy key found and written to $__key_file"
         printf "%s" "$__key_file"
     else
