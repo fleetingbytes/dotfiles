@@ -120,7 +120,7 @@ xnoremap <leader>P "_d"*P
 
 
 g:ale_linters = {
-    'python': ['ruff'],
+    'python': ['ruff', 'ty'],
     'rust': ['analyzer'],
     'javascript': ['eslint'],
     'typescript': ['eslint', 'tsserver', 'typecheck'],
