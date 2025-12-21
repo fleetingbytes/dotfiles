@@ -16,7 +16,7 @@
     type = "file"
     url = "https://github.com/MahdiMirzadeh/qbittorrent/releases/latest/download/dark.qbtheme"
     refreshPeriod = "168h"
-[".config/qBittorrent/themes/catpuccin-mocha.qbtheme"]
+[".config/qBittorrent/themes/catppuccin-mocha.qbtheme"]
     type = "file"
-    url = "https://github.com/catpuccin/qbittorrent/releases/latest/download/catpuccin-mocha.qbtheme"
+    url = "https://github.com/catppuccin/qbittorrent/releases/latest/download/catppuccin-mocha.qbtheme"
     refreshPeriod = "168h"
