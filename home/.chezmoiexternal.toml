@@ -12,3 +12,7 @@
     type = "file"
     url = "https://github.com/MahdiMirzadeh/qbittorrent/releases/latest/download/gruvbox-dark.qbtheme"
     refreshPeriod = "168h"
+[".config/qBittorrent/themes/dark.qbtheme"]
+    type = "file"
+    url = "https://github.com/MahdiMirzadeh/qbittorrent/releases/latest/download/dark.qbtheme"
+    refreshPeriod = "168h"
