@@ -30,6 +30,13 @@ def needs_fat_z() -> bool:
     return hostname in set(("starlab-lite",))
 
 
+def keyboard_options() -> str:
+    options = ["caps:escape_shifted_capslock"]
+    if needs_fat_z():
+        options.append("fat_z")
+    return ",".join(options)
+
+
 def common_data() -> Mapping[str, str]:
     """
     Returns a dictionary with common data
@@ -46,7 +53,7 @@ def common_data() -> Mapping[str, str]:
             ("zdotdir", (home / ".config" / "zdotdir").as_posix()),
             ("youtube_downloads", (downloads_directory / "yt").as_posix()),
             ("on_termux", on_termux()),
-            ("needs_fat_z", needs_fat_z()),
+            ("keyboard_options", keyboard_options()),
         )
     )
     return result
