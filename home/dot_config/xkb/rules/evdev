@@ -1,0 +1,4 @@
+! option = symbols
+  us:colemak_dh:fat_z = +fat_z(colemak_dh)
+! include %S/evdev
+
