@@ -5,6 +5,7 @@ import json
 from collections.abc import Mapping
 from os import getenv
 from pathlib import Path
+from socket import gethostname
 from tempfile import gettempdir
 
 argument_parser = argparse.ArgumentParser("Generate dynamic chezmoi templates")
@@ -24,6 +25,11 @@ def on_termux() -> bool:
     )
 
 
+def needs_fat_z() -> bool:
+    hostname = gethostname()
+    return hostname in set(("starlab-lite",))
+
+
 def common_data() -> Mapping[str, str]:
     """
     Returns a dictionary with common data
@@ -40,6 +46,7 @@ def common_data() -> Mapping[str, str]:
             ("zdotdir", (home / ".config" / "zdotdir").as_posix()),
             ("youtube_downloads", (downloads_directory / "yt").as_posix()),
             ("on_termux", on_termux()),
+            ("needs_fat_z", needs_fat_z()),
         )
     )
     return result
