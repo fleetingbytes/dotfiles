@@ -1,9 +1,5 @@
 #!{{ lookPath "sh" }}
 
-# Set ZDOTDIR
-ZDOTDIR={{ .chezmoi.homeDir }}/.config/zdotdir; export ZDOTDIR
-
-
 if read proto cookie && [ -n "$DISPLAY" ]; then
     if [ `echo $DISPLAY | cut -c1-10` = 'localhost:' ]; then
         # X11UseLocalhost=yes
