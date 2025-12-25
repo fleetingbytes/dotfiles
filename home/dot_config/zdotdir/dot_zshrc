@@ -12,3 +12,6 @@ find "$startup_dir" -type f | while read -r file; do
 done
 
 change_from_chezmoi_working_tree_to_source_path
+
+# Load Starship prompt
+eval "$(starship init zsh)"
