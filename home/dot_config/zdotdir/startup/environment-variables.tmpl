@@ -11,6 +11,6 @@ export MANPATH=$MANPATH:/usr/local/share/man
 export PAGER="less"
 export TMPDIR="{{ $dyn.temporary_directory }}"
 export VISUAL=$EDITOR
-{{- if eq .chezmoi.os "linux" -}}
-export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+{{ if eq .chezmoi.os "linux" -}}
+export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 {{- end -}}
