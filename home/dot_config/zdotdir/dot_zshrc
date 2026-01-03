@@ -11,6 +11,12 @@ find "$startup_dir" -type f | while read -r file; do
     . "$file"
 done
 
+# Load shell completions
+completions_dir="${ZDOTDIR:-$HOME/.config/zdotdir}/completions"
+find "$completions_dir" -type f | while read -r file; do
+    . "$file"
+done
+
 change_from_chezmoi_working_tree_to_source_path
 
 # Load Starship prompt
