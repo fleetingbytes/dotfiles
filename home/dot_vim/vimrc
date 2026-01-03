@@ -232,8 +232,10 @@ plug#begin('~/.vim/plugs')
     Plug 'rust-lang/rust.vim'
     # Syntax highlighter for PlantUML
     Plug 'aklt/plantuml-syntax'
-    # Highligh .csv in Excel dialect
+    # Highlight .csv in Excel dialect
     Plug 'mechatroner/rainbow_csv'
+    # Highlight hugo syntax
+    Plug 'phelipetls/vim-hugo'
 plug#end()
 
 
