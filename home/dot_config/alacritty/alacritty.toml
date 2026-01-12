@@ -1,15 +1,19 @@
+[font.offset]
+x = 0
+y = 0
+
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "DejaVuSansM Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "DejaVuSansM Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
-style = "Italic"
+family = "DejaVuSansM Nerd Font Mono"
+style = "Oblique"
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
-style = "Bold Italic"
+family = "DejaVuSansM Nerd Font Mono"
+style = "Bold Oblique"
