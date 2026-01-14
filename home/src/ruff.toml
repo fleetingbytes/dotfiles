@@ -32,15 +32,16 @@ select = [
     "W",       # pycodestyle warnings
 ]
 
-[lint.per-file-ignores]
-"src/**/cli/__init__.py" = [
-    "N813",  # camelcase-imported-as-lowercase
-]
-
 extend-safe-fixes = [
     "TC001",  # typing-only-first-party-import
     "TC002",  # typing-only-third-party-import
     "TC003",  # typing-only-standard-library-import
+    "TC004",  # runtime-import-in-type-checking-block
+]
+
+[lint.per-file-ignores]
+"src/**/cli/__init__.py" = [
+    "N813",  # camelcase-imported-as-lowercase
 ]
 
 [lint.mccabe]
