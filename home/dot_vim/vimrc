@@ -114,6 +114,11 @@ xnoremap <leader>p "_dP
 xnoremap <leader>P "_d"*P
 
 
+# Navigate to linter warnings/errors
+nnoremap <silent> ]d  <Plug>(ale_next_wrap)
+nnoremap <silent> [d  <Plug>(ale_previous_wrap)
+
+
 
 
 ## ALE Settings ##
