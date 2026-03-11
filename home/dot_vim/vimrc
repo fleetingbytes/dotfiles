@@ -77,17 +77,28 @@ nnoremap <Leader>sv :source $MYVIMRC<CR>
 nnoremap H gT
 nnoremap L gt
 
-# Pretty-print minified JSON files (depends on python), use it as :J
-command! J %!python -m json.tool
+# Pretty-print minified JSON files (uses Vim's python3), use it as :J
+command! -bar J Py3DoJsonFmt()
+def Py3DoJsonFmt()
+        py3 from json import loads, dumps
+        py3 import vim
+        py3 b = vim.current.buffer
+        py3 try:
+        py3     data = loads("\n".join(b))
+        py3     b[:] = dumps(data, indent=4, ensure_ascii=False).splitlines()
+        py3 except: Exception as e:
+        py3     vim.command(f'echohl ErrorMsg | echo "JSON error: {str(e)} | echohl None')
+enddef
 
 # Print current timestamp, use it as :D
 def InsertIsoTimestamp()
-    var ts = system('date -Iseconds')->trim()
-    # Insert after cursor position
-    setline('.', getline('.')[0 : col('.') - 1] .. ts .. getline('.')[col('.') :])
-enddef
+    var ts = strftime('%Y-%m-%dT%H:%M:%S%z')
+    var line = getline('.')
+    var col  = col('.')
 
-command! D call InsertIsoTimestamp()
+    setline('.', $"{line[: col - 2]}{ts}{line[col - 1 :]}")
+enddef
+command! -nargs=0 D InsertIsoTimestamp()
 
 # Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
