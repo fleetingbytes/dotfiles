@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# crontab-ref show|edit|apply
+
+case "$1" in
+  show)
+    TMP="$(mktemp -t crontab)" || exit 1
+    trap 'rm -f "$TMP"' EXIT INT TERM HUP
+
+    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" > "$TMP"
+    chezmoi execute-template -f "$TMP"
+    ;;
+
+  edit)
+    TMP="$(mktemp -t crontab)" || exit 1
+    trap 'rm -f "$TMP"' EXIT INT TERM HUP
+
+    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" > "$TMP"
+    ${EDITOR:-vi} "$TMP"
+    chezmoi encrypt --output "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" "$TMP"
+    printf "%s\n" "✅ Re-encrypted. Commit & push when ready."
+    ;;
+
+  apply)
+    crontab-ref show | crontab -
+    printf "%s\n" "✅ Crontab installed from rendered template."
+    ;;
+
+  *)
+    printf "%s\n" "Usage: crontab-ref show|edit|apply"
+    ;;
+esac
