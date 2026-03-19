@@ -6,7 +6,7 @@ filename=".crontab.age"
 
 case "$1" in
   show)
-    TMP="$(mktemp -t crontab)" || exit 1
+    TMP="$(mktemp -t crontab.XXXX)" || exit 1
     trap 'rm -f "$TMP"' EXIT INT TERM HUP
 
     chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/$filename" > "$TMP"
@@ -14,7 +14,7 @@ case "$1" in
     ;;
 
   edit)
-    TMP="$(mktemp -t crontab)" || exit 1
+    TMP="$(mktemp -t crontab.XXXX)" || exit 1
     trap 'rm -f "$TMP"' EXIT INT TERM HUP
 
     chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/$filename" > "$TMP"
