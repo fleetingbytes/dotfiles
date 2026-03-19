@@ -44,13 +44,25 @@ def common_data() -> Mapping[str, str]:
     .json configuration file
     """
     home = Path(getenv("HOME", default=""))
+    config_dir = home / ".config"
+    cargo_home = config_dir / "cargo"
+    local_bin = home / ".local" / "bin"
+    ssh_dir = home / ".ssh"
+    src_dir = home / "src"
     downloads_directory = home / "Downloads"
     if on_termux():
         downloads_directory = home / "storage" / "shared" / "Download"
+
     result = dict(
         (
+            ("home_dir", home.as_posix()),  # used in .crontab.age
+            ("cargo_home", cargo_home.as_posix()),  # used in .crontab.age
+            ("cargo_bin", (cargo_home / "bin").as_posix()),  # used in .crontab.age
+            ("local_bin", local_bin.as_posix()),  # used in .crontab.age
+            ("ssh_dir", ssh_dir.as_posix()),  # used in .crontab.age
+            ("src_dir", src_dir.as_posix()),  # used in .crontab.age
             ("temporary_directory", gettempdir()),
-            ("zdotdir", (home / ".config" / "zdotdir").as_posix()),
+            ("zdotdir", (config_dir / "zdotdir").as_posix()),
             ("youtube_downloads", (downloads_directory / "yt").as_posix()),
             ("on_termux", on_termux()),
             ("keyboard_options", keyboard_options()),

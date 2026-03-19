@@ -2,12 +2,14 @@
 
 # crontab-ref show|edit|apply
 
+filename=".crontab.age"
+
 case "$1" in
   show)
     TMP="$(mktemp -t crontab)" || exit 1
     trap 'rm -f "$TMP"' EXIT INT TERM HUP
 
-    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" > "$TMP"
+    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/$filename" > "$TMP"
     chezmoi execute-template -f "$TMP"
     ;;
 
@@ -15,15 +17,15 @@ case "$1" in
     TMP="$(mktemp -t crontab)" || exit 1
     trap 'rm -f "$TMP"' EXIT INT TERM HUP
 
-    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" > "$TMP"
+    chezmoi decrypt "$(chezmoi source-path)/.chezmoitemplates/$filename" > "$TMP"
     ${EDITOR:-vi} "$TMP"
-    chezmoi encrypt --output "$(chezmoi source-path)/.chezmoitemplates/.crontab.age" "$TMP"
-    printf "%s\n" "✅ Re-encrypted. Commit & push when ready."
+    chezmoi encrypt --output "$(chezmoi source-path)/.chezmoitemplates/$filename" "$TMP"
+    printf "%s\n" "Template $filename re-encrypted. Commit & push when ready."
     ;;
 
   apply)
     crontab-ref show | crontab -
-    printf "%s\n" "✅ Crontab installed from rendered template."
+    printf "%s\n" "Crontab installed from rendered template."
     ;;
 
   *)
