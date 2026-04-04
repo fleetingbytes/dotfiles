@@ -12,5 +12,6 @@ packages:
         - vim
         - gh
         - ffmpeg
+        - starship
       pip:
         - yt-dlp
