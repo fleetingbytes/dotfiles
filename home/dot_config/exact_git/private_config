@@ -10,7 +10,8 @@
     # hooksPath = ~/.config/git/hooks
 [safe]
     directory = /usr/ports
-	directory = /storage/emulated/0/chazre
+    directory = /storage/emulated/0/chazre
+    directory = /storage/emulated/0/Download/chazre
 [init]
     defaultBranch = master
 [pull]
