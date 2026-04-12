@@ -3,17 +3,17 @@ x = 0
 y = 0
 
 [font.normal]
-family = "DejaVuSansM Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "DejaVuSansM Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "DejaVuSansM Nerd Font Mono"
-style = "Oblique"
+family = "Hack Nerd Font Mono"
+style = "Italic"
 
 [font.bold_italic]
-family = "DejaVuSansM Nerd Font Mono"
-style = "Bold Oblique"
+family = "Hack Nerd Font Mono"
+style = "Bold Italic"
