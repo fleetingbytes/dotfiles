@@ -60,7 +60,7 @@
     layout_mode: Tag,
     insert_behavior: Bottom,
     scratchpad: [
-        (name: "Wezterm", args: None, value: "wezterm", x: 860, y: 390, height: 300, width: 200),
+        (name: "Alacritty", args: None, value: "alacritty", x: 860, y: 390, height: 300, width: 200),
     ],
     window_rules: [],
     disable_current_tag_swap: false,
@@ -75,7 +75,7 @@
     disable_cursor_reposition_on_resize: false,
     keybind: [
         (command: Execute, value: "dmenu_run", modifier: ["modkey"], key: "p"),
-        (command: Execute, value: "wezterm", modifier: ["modkey", "Shift"], key: "Return"),
+        (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: Execute, value: "pkill leftwm", modifier: ["modkey", "Shift"], key: "x"),
