@@ -8,5 +8,5 @@ _*
 {{ end }}
 
 {{ if not $dyn.at_work }}
-**/encrypted_work-only-file.age
+**/secret-work-only-file
 {{ end }}
