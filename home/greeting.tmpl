@@ -1,3 +1,14 @@
 {{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
 {{ $dyn.greeting }},
-you are using your {{ $dyn.config_name }} dotfiles configuration.
+you are using your {{ $dyn.config_name }} dotfiles configuration at
+
+{{- if $dyn.at_work }} work.
+{{- else }} home.
+{{- end }}
+
+
+{{- if $dyn.at_work }}
+Home-only
+{{- else }}
+Work-only
+{{- end }} files have been ignored.

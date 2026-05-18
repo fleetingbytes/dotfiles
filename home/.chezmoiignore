@@ -1,2 +1,12 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
 _*
 ./**/README.md
+
+{{ if $dyn.at_work }}
+./**/home-only-file
+./**/encrypted_home-only-file.age
+{{ end }}
+
+{{ if not $dyn.at_work }}
+./**/encrypted_work-only-file.age
+{{ end }}

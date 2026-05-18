@@ -25,6 +25,11 @@ def on_termux() -> bool:
     )
 
 
+def at_work() -> bool:
+    hostname = gethostname()
+    return hostname in set(("starlab-lite",))
+
+
 def needs_fat_z() -> bool:
     hostname = gethostname()
     return hostname in set(("starlab-lite",))
@@ -65,6 +70,7 @@ def common_data() -> Mapping[str, str]:
             ("zdotdir", (config_dir / "zdotdir").as_posix()),
             ("youtube_downloads", (downloads_directory / "yt").as_posix()),
             ("on_termux", on_termux()),
+            ("at_work", at_work()),
             ("keyboard_options", keyboard_options()),
         )
     )
