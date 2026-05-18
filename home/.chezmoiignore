@@ -4,7 +4,7 @@ _*
 
 {{ if $dyn.at_work }}
 ./**/home-only-file
-./**/sec-home-only.age
+./**/encrypted_sec-home-only.age
 {{ end }}
 
 {{ if not $dyn.at_work }}
