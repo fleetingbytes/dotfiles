@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# edit-encrypted-template <encrypted_template_file_name in .chezmoitemplates>
+
+file_name="$1"
+encrypted_template_path="$(chezmoi source-path)/.chezmoitemplates/$file_name"
+
+TMP="$(mktemp -t edit-encrypted.XXXX)" || exit 1
+trap 'rm -f "$TMP"' EXIT INT TERM HUP
+
+chezmoi decrypt "$encrypted_template_path" > "$TMP"
+${EDITOR:-vi} "$TMP"
+chezmoi encrypt --output "$encrypted_template_path" "$TMP"
+printf "%s\n" "Template $file_name re-encrypted. Commit & push when ready."
