@@ -1,15 +1,15 @@
-# Dynamically Generated Template Values
+# Dynamically Generated Values Used in Templates
 
 At the very beginning of the `chezmoi apply` procedure, the [template generation script][template-generation-script] `10_generate_dynamic_template.sh` (which itself is a template) is run.
 It generates the JSON file `_dynamic/dyn_config.json` (which is ignored by .gitignore).
-Almost all template files I use have this line somewhere at the beginning of their content:
+Almost all template files I use read this JSON object at the beginning and provide it as `$dyn`:
 ```
 {{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
 ```
-This creates a variable `$dyn`, a structured object into which the generated data in `_dynamic/dyn_config.json` file are read.
+
 The following content of the template file somewhere uses a value from the `$dyn` object.
 
-Fox example in my [yt-dlp config][yt-dlp-config], depending on my machine's OS, I use different paths to download videos to.
+Fox example, in my [yt-dlp config][yt-dlp-config], depending on my machine's OS, I use different paths to download videos to.
 I don't need to write complex logic statements `{{ if eq .chezmoi.os "..." }} ...` with all the if-branches but instead just
 ```
 {{ $dyn.youtube_downloads | quote }}
@@ -51,6 +51,37 @@ you are using your special dotfiles configuration.
 ```
 
 And its content can be switched as I need it by me running the [set-configuration][set-configuration] script. This way I can change a configuration file or even the contents of an executable script by switching my dotfiles configuration.
+
+
+# Maintaining Sensitive Data in the Templates and Switching Between Work and Home Config
+
+Some config files have sensitive data, either from work environment, or from the home environment. The sensitive data (which may themselves be templates, but ofter are not), reside encrypted as `.age` files in `.chezmoitemplates`.
+
+The configuration files which use them, are templates because they contain instructions which encrypted data/templates to pull in. For example, my carago configuration at work contains some data nobody needs to see. This data lies encrypted in `.chezmoitemplates/.cargo-config.work.toml.age`. By starting the file name with a `.`, chezmoi will automatically ignore it.
+
+The actual cargo config file is then templated in `dot_config/cargo/config.toml.tmpl` and it pulls in the sensitive data by
+
+```
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".cargo-config.work.toml.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}
+```
+
+This all is then part of an if-fork which distinguishes whether this config file should contain data for the work environment or for the home environment:
+
+```
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+{{ if $dyn.at_work -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".cargo-config.work.toml.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+{{ else -}}
+# Cargo config for home environment
+# Nothing here yet, using default config
+{{ end }}
+```
+
+Whenever I need the secret or sensitive data in the `.age` files I can use the shell script `edit-encrypted-template` (in `.local/bin`) to list or edit the templates.
+
+
 
 [configurator-py]: https://github.com/fleetingbytes/dotfiles/blob/master/home/_dynamic/configurator.py
 [default]: https://github.com/fleetingbytes/dotfiles/blob/master/home/_dynamic/default.json

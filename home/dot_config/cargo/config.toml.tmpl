@@ -1,0 +1,8 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+{{ if $dyn.at_work -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".cargo-config.work.toml.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+{{ else -}}
+# Cargo config for home environment
+# Nothing here yet, using default config
+{{ end }}
