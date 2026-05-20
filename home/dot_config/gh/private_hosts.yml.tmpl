@@ -2,4 +2,4 @@
 
 {{- /* work and home config */ -}}
 {{ $shared_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-gh-hosts.shared.yml.age" | include | decrypt -}}
-{{ $work_config | trimAll "\n" -}}
+{{ $shared_config | trimAll "\n" -}}
