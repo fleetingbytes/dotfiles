@@ -1,27 +1,30 @@
-[user]
-    name = fleetingbytes
-    email = 7075397+fleetingbytes@users.noreply.github.com
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+{{ if $dyn.at_work -}}
+
+{{- /* work config */ -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-git-config.work.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+
+{{ else -}}
+{{- /* home config */ -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-git-config.home.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+
+{{ end }}
+{{- /* shared config */ -}}
 [core]
     editor = vim
     excludesFile = ~/.config/git/ignore
     attributesFile = ~/.config/git/attributes
     autocrlf = input
     eol = lf
-    # hooksPath = ~/.config/git/hooks
 [safe]
     directory = /usr/ports
-    directory = /storage/emulated/0/chazre
     directory = /storage/emulated/0/Download/chazre
 [init]
     defaultBranch = master
 [pull]
     ff = only
-[lfs "https://github.com/fleetingbytes/dotfiles.git/info/lfs"]
-    locksverify = true
-[lfs "https://github.com/fleetingbytes/chazre.git/info/lfs"]
-    locksverify = true
-[lfs "https://github.com/fleetingbytes/bootstrap.git/info/lfs"]
-    locksverify = true
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -35,3 +38,9 @@
     pushf = !"git push --force-with-lease --force-if-includes #"
     tree = log --all --decorate --abbrev-commit --pretty=format:'%x09%C(auto)%h %<(50,trunc)%s %d' --graph
     plog = log --decorate --abbrev-commit --pretty=format:'%C(auto)%h %<(50,trunc)%s %<(10,trunc)%aN %d'
+[lfs "https://github.com/fleetingbytes/dotfiles.git/info/lfs"]
+    locksverify = true
+[lfs "https://github.com/fleetingbytes/chazre.git/info/lfs"]
+    locksverify = true
+[lfs "https://github.com/fleetingbytes/bootstrap.git/info/lfs"]
+    locksverify = true
