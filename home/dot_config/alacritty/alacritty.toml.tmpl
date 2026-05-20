@@ -1,0 +1,38 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+{{- /* common config */ -}}
+
+[font.offset]
+x = 0
+y = 0
+
+[font.normal]
+family = "Hack Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "Hack Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "Hack Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "Hack Nerd Font Mono"
+style = "Bold Italic"
+
+{{- /* work config */ -}}
+{{ if $dyn.at_work }}
+
+[env]
+SHELL = "/usr/bin/zsh"
+
+[terminal.shell]
+  program = "/usr/bin/zsh"
+  args = ["-l"]
+
+[window.dimensions]
+  columns = 137
+  lines = 37
+{{ end -}}
