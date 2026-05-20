@@ -2,7 +2,7 @@
 {{ if $dyn.at_work -}}
 
 {{- /* work config */ -}}
-{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".cargo-config.work.toml.age" | include | decrypt -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-cargo-config.work.toml.age" | include | decrypt -}}
 {{ $work_config | trimAll "\n" -}}
 {{ else -}}
 {{- /* home config */ -}}
