@@ -1,0 +1,11 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+{{ if $dyn.at_work -}}
+
+{{- /* work config */ -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-glab-cli-aliases.work.yml.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+{{ else -}}
+{{- /* home config */ -}}
+{{- /* nothing here yet */ -}}
+{{ end }}
+
