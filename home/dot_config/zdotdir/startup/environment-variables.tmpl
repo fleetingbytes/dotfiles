@@ -16,8 +16,9 @@ export VISUAL=$EDITOR
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 {{ end -}}
 
+{{- /* work config */ -}}
 {{ if $dyn.at_work -}}
-{{ /* work config */ }}
 {{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-zdotdir-startup-environment-variables.work.age" | include | decrypt -}}
+
 {{ $work_config | trimAll "\n" -}}
 {{ end }}
