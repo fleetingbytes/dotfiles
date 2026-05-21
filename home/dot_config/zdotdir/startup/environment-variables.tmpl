@@ -14,7 +14,7 @@ export VISUAL=$EDITOR
 {{- if eq .chezmoi.os "linux" }}
 # CMake, meson, etc. need PKG_CONFIG_PATH specified
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
-{{- end -}}
+{{ end -}}
 
 {{- /* work config */ -}}
 {{ if $dyn.at_work -}}
