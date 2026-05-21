@@ -1,0 +1,24 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Bookmarks
+        </title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Bookmarks">
+        <meta name="keywords" content="HTML">
+        <meta name="author" content="fleetingbytes">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+{{ if $dyn.at_work -}}
+{{- /* work bookmarks */ -}}
+{{ $work_bookmarks := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".bookmarks.work.html.age" | include | decrypt -}}
+{{ $work_bookmarks | trimAll "\n" -}}
+{{ end }}
+{{- /* home bookmarks */ -}}
+{{ $home_bookmarks := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".bookmarks.home.html.age" | include | decrypt -}}
+{{ $home_bookmarks | trimAll "\n" }}
+    </body>
+</html>
