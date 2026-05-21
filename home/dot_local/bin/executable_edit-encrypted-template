@@ -8,7 +8,7 @@ templates_dir="$(chezmoi source-path)/.chezmoitemplates"
 
 
 if [ "$file_name" = "list" ]; then
-    find "$templates_dir" -maxdepth 1 -name "*.age" -printf "%f\n"
+    find "$templates_dir" -maxdepth 1 -name "*.age" -printf "%f\n" | sort
     exit 0
 
 else
