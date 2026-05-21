@@ -7,9 +7,8 @@ function _add_to_path() {
     done
 }
 
-_add_to_path "$HOME/.config/cargo/bin" "$HOME/.local/bin" "$HOME/.nimble/bin"
+local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-[[ "$XDG_CONFIG_HOME" ]] && _add_to_path "$XDG_CONFIG_HOME/cargo/bin"
+_add_to_path "$HOME/.local/bin" "${config_dir}/cargo/bin"
 
 unfunction _add_to_path
-
