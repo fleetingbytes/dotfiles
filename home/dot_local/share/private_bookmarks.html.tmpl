@@ -14,7 +14,7 @@
     <body>
 {{ if $dyn.at_work -}}
 {{- /* work bookmarks */ -}}
-{{ $work_bookmarks := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".bookmarks.work.html.age" | include | decrypt }}
+{{ $work_bookmarks := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".bookmarks.work.html.age" | include | decrypt -}}
 {{ $work_bookmarks | trimAll "\n" }}
 {{ end }}
 {{- /* home bookmarks */ -}}
