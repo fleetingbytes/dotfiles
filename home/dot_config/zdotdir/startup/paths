@@ -9,6 +9,6 @@ function _add_to_path() {
 
 local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-_add_to_path "$HOME/.local/bin" "${config_dir}/cargo/bin"
+_add_to_path "$HOME/.local/bin" "$HOME/.local/go/bin" "${config_dir}/cargo/bin"
 
 unfunction _add_to_path
