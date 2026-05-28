@@ -8,7 +8,3 @@
     refreshPeriod = "168h"
     [".local/share/zap".clone]
         args = ["-b", "master"]
-[".config/qBittorrent/themes/catppuccin-mocha.qbtheme"]
-    type = "file"
-    url = "https://github.com/catppuccin/qbittorrent/releases/latest/download/catppuccin-mocha.qbtheme"
-    refreshPeriod = "168h"
