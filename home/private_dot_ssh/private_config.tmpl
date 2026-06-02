@@ -1,0 +1,16 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+{{- /* shared config */ -}}
+{{ $shared_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".ssh-config.shared.age" | include | decrypt -}}
+{{ $shared_config | trimAll "\n" }}
+
+{{ if $dyn.at_work -}}
+{{- /* work config */ -}}
+{{ $work_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".ssh-config.work.age" | include | decrypt -}}
+{{ $work_config | trimAll "\n" -}}
+
+{{ else -}}
+{{- /* home config */ -}}
+{{ $home_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".ssh-config.home.age" | include | decrypt -}}
+{{ $home_config | trimAll "\n" -}}
+{{ end }}
