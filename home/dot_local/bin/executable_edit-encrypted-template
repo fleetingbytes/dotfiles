@@ -15,10 +15,16 @@ else
     encrypted_template_path="$templates_dir/$file_name"
 
     TMP="$(mktemp -t edit-encrypted.XXXX)" || exit 1
-    trap 'rm -f "$TMP"' EXIT INT TERM HUP
+    CHECKSUM="$TMP.checksum"
+    trap 'rm -f "$TMP" "$CHECKSUM"' EXIT INT TERM HUP
 
     chezmoi decrypt "$encrypted_template_path" > "$TMP"
+    sha512sum --tag "$TMP" > "$CHECKSUM"
+
     ${EDITOR:-vi} "$TMP"
-    chezmoi encrypt --output "$encrypted_template_path" "$TMP"
-    printf "%s\n" "Template $file_name re-encrypted. Commit & push when ready."
+
+    if ! sha512sum --check --status "$CHECKSUM"; then
+        chezmoi encrypt --output "$encrypted_template_path" "$TMP"
+        printf "%s\n" "Template $file_name re-encrypted. Commit & push when ready."
+    fi
 fi
