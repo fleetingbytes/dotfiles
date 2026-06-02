@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+# USAGE:
 # edit-encrypted-template <encrypted_template_file_name in .chezmoitemplates>
 # edit-encrypted-template list  # lists available .age files in .chezmoitemplates
 
@@ -14,17 +15,17 @@ if [ "$file_name" = "list" ]; then
 else
     encrypted_template_path="$templates_dir/$file_name"
 
-    TMP="$(mktemp -t edit-encrypted.XXXX)" || exit 1
-    CHECKSUM="$TMP.checksum"
-    trap 'rm -f "$TMP" "$CHECKSUM"' EXIT INT TERM HUP
+    temp_file="$(mktemp -t edit-encrypted.XXXX)" || exit 1
+    checksum_file="$temp_file.checksum"
+    trap 'rm -f "$temp_file" "$checksum_file"' EXIT INT TERM HUP
 
-    chezmoi decrypt "$encrypted_template_path" > "$TMP"
-    sha512sum --tag "$TMP" > "$CHECKSUM"
+    chezmoi decrypt "$encrypted_template_path" > "$temp_file"
+    sha512sum --tag "$temp_file" > "$checksum_file"
 
-    ${EDITOR:-vi} "$TMP"
+    ${EDITOR:-vi} "$temp_file"
 
-    if ! sha512sum --check --status "$CHECKSUM"; then
-        chezmoi encrypt --output "$encrypted_template_path" "$TMP"
+    if ! sha512sum --check --status "$checksum_file"; then
+        chezmoi encrypt --output "$encrypted_template_path" "$temp_file"
         printf "%s\n" "Template $file_name re-encrypted. Commit & push when ready."
     fi
 fi
