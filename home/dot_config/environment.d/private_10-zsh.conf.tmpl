@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
+{{ $shared_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".config-environment.d-10-zsh.shared.conf.age" | include | decrypt -}}
+{{ $shared_config | trimAll "\n" -}}
+{{ end -}}
