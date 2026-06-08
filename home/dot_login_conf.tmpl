@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.os "freebsd" "ghostbsd" -}}
+{{ $home_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".login_conf.age" | include | decrypt -}}
+{{ $home_config | trimAll "\n" -}}
+{{ end -}}
