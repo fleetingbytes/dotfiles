@@ -21,7 +21,7 @@ pkg install -y
 
 chsh -s zsh
 
-pip install -y --upgrade 
+pip install --upgrade 
 {{- range .packages.linux.termux.pip }} {{ . | quote }}{{ end }}
 
 {{- end -}}
