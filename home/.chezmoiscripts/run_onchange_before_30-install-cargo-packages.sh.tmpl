@@ -14,8 +14,8 @@ RUSTUP_HOME={{ $dyn.rustup_home | quote }}
 
 cargo_cmd="$ {{- $dyn.cargo_bin }}/cargo"
 
-export $CARGO_HOME
-export $RUSTUP_HOME
+export CARGO_HOME
+export RUSTUP_HOME
 
 [ -x "$cargo_cmd" ] && "$cargo_cmd" install 
 {{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
