@@ -1,5 +1,6 @@
 {{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
-export CARGO_HOME=~/.config/cargo
+export CARGO_HOME={{- $dyn.cargo_home | quote}}
+export RUSTUP_HOME={{- $dyn.rustup_home | quote}}
 export DIFFCOLORS="auto"
 export EDITOR=vim
 export GIT_SSH_COMMAND=~/.local/bin/ssh-deploy-key-wrapper

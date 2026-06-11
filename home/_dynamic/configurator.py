@@ -51,6 +51,7 @@ def common_data() -> Mapping[str, str]:
     home = Path(getenv("HOME", default=""))
     config_dir = home / ".config"
     cargo_home = config_dir / "cargo"
+    rustup_home = config_dir / "rustup"
     local_bin = home / ".local" / "bin"
     ssh_dir = home / ".ssh"
     src_dir = home / "src"
@@ -62,6 +63,7 @@ def common_data() -> Mapping[str, str]:
         (
             ("home_dir", home.as_posix()),  # used in .crontab.age
             ("cargo_home", cargo_home.as_posix()),  # used in .crontab.age
+            ("rustup_home", rustup_home.as_posix()),  # used in .chezmoiscripts/*provide_cargo.sh
             ("cargo_bin", (cargo_home / "bin").as_posix()),  # used in .crontab.age
             ("local_bin", local_bin.as_posix()),  # used in .crontab.age
             ("ssh_dir", ssh_dir.as_posix()),  # used in .crontab.age

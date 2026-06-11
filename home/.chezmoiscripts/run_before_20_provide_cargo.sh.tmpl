@@ -1,0 +1,11 @@
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+#!{{ lookPath "sh" }}
+
+if ! command -v -- "cargo"; then
+    CARGO_HOME={{ $dyn.cargo_home | quote }} RUSTUP_HOME={{ $dyn.rustup_home | quote }} \
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+        sh -s -- -y --no-modify-path
+fi
+{{ end -}}

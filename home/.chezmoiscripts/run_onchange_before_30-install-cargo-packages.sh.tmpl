@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "linux" "freebsd" -}}
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+#!{{ lookPath "sh" }}
+
+# The following hashes are included in this script so that it is only run when
+# the contents of the files change and thus the contents of this script change.
+# packages.yml hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+
+set -ev
+
+if command -v -- "cargo"; then
+    cargo install 
+    {{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
+fi
+
+{{- end -}}
