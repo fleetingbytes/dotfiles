@@ -5,7 +5,7 @@
 
 printf "%s\n" "Installing Cargo..."
 
-cargo_cmd="$ {{- $dyn.cargo_bin }}/cargo"
+cargo_cmd="{{- $dyn.cargo_bin }}/cargo"
 
 if ! [ -x "$cargo_cmd" ]; then
     CARGO_HOME={{ $dyn.cargo_home | quote }} RUSTUP_HOME={{ $dyn.rustup_home | quote }} \
