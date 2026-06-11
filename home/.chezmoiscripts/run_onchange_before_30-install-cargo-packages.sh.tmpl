@@ -12,7 +12,14 @@ set -v
 CARGO_HOME={{ $dyn.cargo_home | quote }}
 RUSTUP_HOME={{ $dyn.rustup_home | quote }}
 
+{{ if eq .chezmoi.os "linux" -}}
 cargo_cmd="{{- $dyn.cargo_bin }}/cargo"
+
+{{ else if eq .chezmoi.os "freebsd" -}}
+{{- /* presume cargo is already installed on FreeBSD */ -}}
+cargo_cmd="$(command -v -- "cargo")"
+
+{{ end }}
 
 export CARGO_HOME
 export RUSTUP_HOME
