@@ -13,9 +13,7 @@ export CARGO_HOME={{ $dyn.cargo_home | quote }}
 
 cargo_cmd="$CARGO_HOME/cargo/bin/cargo"
 
-if command -v -- "cargo"; then
-    "$cargo_cmd" install 
-    {{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
-fi
+[ -x "$cargo_cmd" ] && "$cargo_cmd" install 
+{{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
 
 {{ end }}
