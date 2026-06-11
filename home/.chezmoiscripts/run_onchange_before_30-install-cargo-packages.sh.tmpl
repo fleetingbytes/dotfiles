@@ -7,7 +7,7 @@
 # the contents of the files change and thus the contents of this script change.
 # packages.yml hash: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
 
-set -ev
+set -v
 
 CARGO_HOME={{ $dyn.cargo_home | quote }}
 RUSTUP_HOME={{ $dyn.rustup_home | quote }}
