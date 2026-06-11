@@ -9,9 +9,13 @@
 
 set -ev
 
+export CARGO_HOME={{ $dyn.cargo_home | quote }}
+
+cargo_cmd="$CARGO_HOME/cargo/bin/cargo"
+
 if command -v -- "cargo"; then
-    cargo install 
+    "$cargo_cmd" install 
     {{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
 fi
 
-{{- end -}}
+{{ end }}
