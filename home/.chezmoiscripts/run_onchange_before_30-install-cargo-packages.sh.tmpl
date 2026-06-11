@@ -9,9 +9,11 @@
 
 set -ev
 
+printf "%s\n" "Installing Cargo..."
+
 export CARGO_HOME={{ $dyn.cargo_home | quote }}
 
-cargo_cmd="$CARGO_HOME/cargo/bin/cargo"
+cargo_cmd="$CARGO_HOME/bin/cargo"
 
 [ -x "$cargo_cmd" ] && "$cargo_cmd" install 
 {{- range .packages.unix_like.cargo.pkg }} {{ . | quote }}{{ end }}
