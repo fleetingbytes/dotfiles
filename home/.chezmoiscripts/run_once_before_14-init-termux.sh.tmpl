@@ -1,0 +1,13 @@
+{{- if eq .chezmoi.os "android" -}}
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+
+#!{{ lookPath "sh" }}
+
+set -v
+
+termux-setup-storage
+pkg update
+pkg upgrade -y
+echo "ZDOTDIR={{ $dyn.zdotdir }}" > "$HOME/.zshenv"
+
+{{- end -}}
