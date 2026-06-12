@@ -147,7 +147,7 @@ g:ale_fixers = {
     'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'],
     'javascript': ['eslint'],
     'typescript': ['eslint'],
-    'html': ['tidy'],
+    #'html': ['tidy'],
     }
 
 # As-you-type autocomplete
@@ -252,6 +252,8 @@ plug#begin('~/.vim/plugs')
     Plug 'mechatroner/rainbow_csv'
     # Highlight hugo syntax
     Plug 'phelipetls/vim-hugo'
+    # Highlight chezmoi template syntax
+    Plug 'alker0/chezmoi.vim'
 plug#end()
 
 
