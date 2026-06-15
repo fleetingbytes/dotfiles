@@ -3,11 +3,10 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!{{ lookPath "sh" }}
 
-printf "%s\n" "Installing Cargo..."
-
 cargo_cmd="{{- $dyn.cargo_bin }}/cargo"
 
 if ! [ -x "$cargo_cmd" ]; then
+    printf "%s\n" "Installing Cargo..."
     CARGO_HOME={{ $dyn.cargo_home | quote }} RUSTUP_HOME={{ $dyn.rustup_home | quote }} \
         sh -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs |  sh -s -- -y --no-modify-path'
 fi
