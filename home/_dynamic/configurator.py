@@ -27,7 +27,7 @@ def on_termux() -> bool:
 
 def at_work() -> bool:
     hostname = gethostname()
-    return any(hostname.startswith(s) for s in set(("20iav016996n-0", "starlab-lite")))
+    return any(hostname.startswith(s) for s in set(("20iav016996n-0")))
 
 
 def needs_fat_z() -> bool:
