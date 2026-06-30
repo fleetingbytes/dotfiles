@@ -19,5 +19,10 @@ done
 
 change_from_chezmoi_working_tree_to_source_path
 
+# Load fnm if it exists
+if command -v fnm > /dev/null; then
+    eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
 # Load Starship prompt
 eval "$(starship init zsh)"
