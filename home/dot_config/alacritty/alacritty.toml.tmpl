@@ -27,6 +27,7 @@ style = "Bold Italic"
 
 [env]
 SHELL = "/usr/bin/zsh"
+TERM = "alacritty"
 
 [terminal.shell]
   program = "/usr/bin/zsh"
@@ -35,4 +36,8 @@ SHELL = "/usr/bin/zsh"
 [window.dimensions]
   columns = 137
   lines = 37
+{{ else }}
+
+[env]
+TERM = "alacritty"
 {{ end -}}
