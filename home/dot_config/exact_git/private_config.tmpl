@@ -32,6 +32,7 @@
     # will create feature-branch-name in ../feature, checkout origin/dev into it and create a MR draft for it
     # https://stackoverflow.com/a/25915221/9235421 Git Alias - Multiple Commands and Parameters
     create = !"git worktree add -b $1 $2 origin/$3 && git push -u origin $1 -o merge_request.create -o merge_request.target=$3 -o merge_request.draft #"
+    create-gh = !"git worktree add -b $1 $2 origin/$3 && git push -u origin $1 && gh pr create --base $3 --draft #"
     pushf = !"git push --force-with-lease --force-if-includes #"
     tree = log --all --decorate --abbrev-commit --pretty=format:'%x09%C(auto)%h %<(50,trunc)%s %d' --graph
     plog = log --decorate --abbrev-commit --pretty=format:'%C(auto)%h %<(50,trunc)%s %<(10,trunc)%aN %d'
