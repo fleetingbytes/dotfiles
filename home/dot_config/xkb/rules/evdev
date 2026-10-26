@@ -1,4 +1,4 @@
 ! option = symbols
-  us:colemak_dh:fat_z = +fat_z(colemak_dh)
+  us:colemak_dh:fat_z = +fat_z(colemak_dh_fat_z)
 ! include %S/evdev
 
