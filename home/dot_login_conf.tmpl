@@ -1,4 +1,9 @@
 {{ if eq .chezmoi.os "freebsd" "ghostbsd" -}}
-{{ $home_config := joinPath .chezmoi.sourceDir ".chezmoitemplates" ".login_conf.age" | include | decrypt -}}
-{{ $home_config | trimAll "\n" -}}
+{{ $dyn := include "_dynamic/dyn_config.json" | mustFromJson -}}
+#
+# see login.conf(5)
+#
+me:\
+    :setenv=BLOCKSIZE=K,ZDOTDIR={{- $dyn.zdotdir -}}:
+    :tc=default:
 {{ end -}}

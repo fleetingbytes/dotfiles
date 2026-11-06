@@ -18,6 +18,4 @@ packages:
   unix_like:
     cargo:
       pkg:
-        - bat
-        - eza
         - starship
