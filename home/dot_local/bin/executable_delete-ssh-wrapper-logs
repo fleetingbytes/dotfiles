@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+log_dir_name="git-ssh-wrapper-logs"
+
+[ -s "$TMPDIR" ] && rm -rf "$TMPDIR/$log_dir_name".*
+[ -s "$HOME" ] && rm -rf "$HOME/$log_dir_name".*
