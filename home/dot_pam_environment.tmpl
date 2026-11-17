@@ -1,3 +1,4 @@
 {{ if eq .chezmoi.os "linux" "android" -}}
 ZDOTDIR DEFAULT={{ .chezmoi.homeDir }}/.config/zdotdir
+XDG_DATA_DIRS=/var/lib/flatpak/exports/share:{{ .chezmoi.homeDir }}/.local/share/flatpak/exports/share:/usr/local/share:/usr/share
 {{ end -}}
